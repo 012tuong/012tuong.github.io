@@ -1,4 +1,3 @@
-# tuowngf.4.github.io
 # Chào mừng đến với thế giới của mình!
 
 Mình là [Tên của bạn]
