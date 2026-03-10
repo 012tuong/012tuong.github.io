@@ -1,75 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bio của 012tuong</title>
     <style>
-        /* NỀN VÀ CHỮ */
-        body { 
-            margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?auto=format&fit=crop&w=1350&q=80'); /* Link ảnh nền đêm sao */
-            background-size: cover; background-attachment: fixed;
-            display: flex; justify-content: center; align-items: center; height: 100vh; color: white; overflow: hidden;
+        /* TOÀN BỘ PHÔNG NỀN */
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; font-family: 'Segoe UI', sans-serif;
+            color: white; overflow: hidden;
+            background: url('https://wallpaperaccess.com/full/1605503.jpg'); /* Thay link ảnh nền Anime tại đây */
+            background-size: cover; background-position: center;
         }
 
-        /* KHUNG BIO */
-        .card { 
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
-            width: 320px; padding: 30px; border-radius: 25px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            z-index: 10;
+        /* LỚP PHỦ MÀU TÍM & NHIỄU HẠT (PIXEL) GIỐNG ẢNH MẪU */
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(40, 0, 60, 0.6); /* Màu tím mờ */
+            background-image: radial-gradient(rgba(0,0,0,0.2) 1px, transparent 0);
+            background-size: 3px 3px; /* Hiệu ứng chấm nhỏ pixel */
+            z-index: 1;
         }
 
-        /* ẢNH ĐẠI DIỆN */
+        /* KHUNG CHÍNH */
+        .container {
+            position: relative; z-index: 10; text-align: center;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px);
+            padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            width: 350px;
+        }
+
+        /* ẢNH ĐẠI DIỆN TRÒN */
         .avatar {
             width: 100px; height: 100px; border-radius: 50%;
-            border: 3px solid white; object-fit: cover; margin-bottom: 15px;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            border: 2px solid #ff00ff; object-fit: cover;
+            margin-bottom: 15px; box-shadow: 0 0 20px #ff00ff;
         }
 
-        /* NÚT BẤM CÓ HIỆU ỨNG */
-        .button {
-            display: block; background: white; color: #333;
-            padding: 12px; margin: 15px 0; text-decoration: none;
-            border-radius: 50px; font-weight: bold; transition: 0.3s;
-        }
-        .button:hover { 
-            transform: scale(1.05); background: #007bff; color: white;
-            box-shadow: 0 0 20px rgba(0,123,255,0.6);
-        }
+        /* TÊN VÀ THÔNG TIN */
+        h1 { font-size: 24px; margin: 5px 0; color: #ff99ff; text-shadow: 0 0 10px #ff00ff; }
+        p { font-size: 14px; opacity: 0.8; }
 
-        /* HIỆU ỨNG MƯA TUYẾT */
-        .snowflakes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .snowflake { color: #fff; font-size: 1em; position: fixed; top: -10%; user-select: none; cursor: default; animation: fall linear infinite; }
-        @keyframes fall {
-            to { transform: translateY(110vh); }
+        /* CÁC NÚT BẤM DẠNG ICON (NHƯ TRONG HÌNH) */
+        .social-links { margin: 20px 0; }
+        .social-links a {
+            color: white; text-decoration: none; font-size: 25px; margin: 0 15px;
+            transition: 0.3s; display: inline-block;
         }
+        .social-links a:hover { transform: scale(1.2); color: #ff00ff; }
+
+        /* THANH PHÁT NHẠC XỊN */
+        .music-player {
+            background: rgba(255, 255, 255, 0.1); padding: 10px;
+            border-radius: 10px; margin-top: 20px; display: flex; align-items: center; gap: 10px;
+        }
+        .music-img { width: 40px; height: 40px; border-radius: 5px; animation: rotate 3s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* HIỆU ỨNG TUYẾT RƠI NHẸ */
+        .snowflake {
+            position: fixed; top: -10px; color: white; font-size: 10px;
+            user-select: none; pointer-events: none; z-index: 5;
+            animation: fall linear infinite;
+        }
+        @keyframes fall { to { transform: translateY(105vh); } }
     </style>
 </head>
 <body>
 
-    <div class="snowflakes">
-        <div class="snowflake" style="left:10%; animation-duration:10s;">❄</div>
-        <div class="snowflake" style="left:30%; animation-duration:8s;">.</div>
-        <div class="snowflake" style="left:50%; animation-duration:12s;">❄</div>
-        <div class="snowflake" style="left:70%; animation-duration:7s;">.</div>
-        <div class="snowflake" style="left:90%; animation-duration:11s;">❄</div>
-    </div>
+    <div class="overlay"></div>
 
-    <div class="card">
-        <img src="https://via.placeholder.com/150" class="avatar" alt="Avatar">
+    <script>
+        function createSnow() {
+            const snow = document.createElement('div');
+            snow.classList.add('snowflake');
+            snow.innerHTML = '❄';
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snow.style.opacity = Math.random();
+            document.body.appendChild(snow);
+            setTimeout(() => { snow.remove(); }, 5000);
+        }
+        setInterval(createSnow, 100);
+    </script>
+
+    <div class="container">
+        <img src="https://i.pinimg.com/736x/88/11/49/881149479c3f4433f8f6356417734268.jpg" class="avatar">
         
-        <h2>012tuong 👋</h2>
-        <p>Chào mừng bạn ghé thăm!</p>
+        <h1>Tường</h1>
+        <p></p>
+        <p>📍 Thanh Hóa</p>
 
-        <a class="button" href="LINK_FACEBOOK_CỦA_BẠN">Facebook của mình</a>
-        <a class="button" href="LINK_ZALO_CỦA_BẠN">Kết bạn Zalo</a>
+        <div class="social-links">
+            <a href="LINK_FACEBOOK_CỦA_BẠN">FB</a>
+            <a href="LINK_TIKTOK_CỦA_BẠN">TT</a>
+            <a href="LINK_ZALO_CỦA_BẠN">ZL</a>
+        </div>
 
-        <audio autoplay loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        </audio>
-        <p style="font-size: 10px; opacity: 0.7;">(Nhạc đang phát... 🎵)</p>
+        <div class="music-player">
+            <img src="https://i.pinimg.com/originals/81/4f/98/814f982996d98d67f70b3e51d4590685.jpg" class="music-img">
+            <div style="text-align: left;">
+                <div style="font-size: 12px; font-weight: bold;">Tên bài hát đang phát...</div>
+                <audio controls style="height: 25px; width: 180px;">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
     </div>
 
 </body>
