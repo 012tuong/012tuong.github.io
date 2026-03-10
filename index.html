@@ -13,16 +13,16 @@
         ============================================================ */
         const CONFIG = {
             ten_hien_thi: "Tường 🎂",
-            anh_dai_dien: "https://i.pinimg.com/736x/21/61/60/2161609169420076a591e1d279313931.jpg",
+            anh_dai_dien: "https://i.pinimg.com/originals/e1/93/9c/e1939c0e359a35e69e000445d0701048.jpg", // 😻 ẢNH CUTE MẪU
             anh_nen: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964",
             link_nhac_mp3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
             ten_bai_hat: "Đừng làm em buồn...",
-            logo_bai_hat: "https://i.pinimg.com/originals/81/4f/98/814f982996d98d67f70b3e51d4590685.jpg",
+            logo_bai_hat: "https://i.pinimg.com/736x/8f/30/80/8f3080c5f21295250495392e62e0802c.jpg", // 😻 LOGO CUTE MẪU
 
-            // DANH SÁCH CÁC Ô (GRID) - Bạn có thể thêm/bớt các ô ở đây
+            // DANH SÁCH CÁC Ô (GRID)
             items: [
                 { ten: "Facebook", icon: "fab fa-facebook", url: "#", mau: "#1877f2" },
-                { ten: "TikTok", icon: "fab fa-tiktok", url: "#", mau: "#000000" },
+                { ten: "TikTok", icon: "fab fa-tiktok", url: "#", mau: "#ffffff" },
                 { ten: "Instagram", icon: "fab fa-instagram", url: "#", mau: "#e4405f" },
                 { ten: "Discord", icon: "fab fa-discord", url: "#", mau: "#5865f2" },
                 { ten: "Zalo", icon: "fas fa-comment", url: "#", mau: "#0068ff" },
@@ -42,52 +42,45 @@
             cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important;
         }
 
-        /* Nền & Hiệu ứng */
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: -1; }
         
-        /* THANH NHẠC GÓC TRÁI TRÊN */
+        /* 🎵 THANH NHẠC NHỎ DÀI */
         .music-top-left {
-            position: fixed; top: 20px; left: 20px; z-index: 100;
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 10px 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px;
-            backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: fixed; top: 15px; left: 15px; z-index: 100;
+            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 20px; border-radius: 30px;
+            display: flex; align-items: center; gap: 15px;
+            backdrop-filter: blur(15px); box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            min-width: 280px;
         }
-        .music-top-left img { width: 40px; height: 40px; border-radius: 8px; animation: spin 6s linear infinite; }
-        .music-info { font-size: 12px; max-width: 120px; }
-        .music-controls i { cursor: pointer; font-size: 18px; transition: 0.3s; }
-        .music-controls i:hover { color: pink; }
+        .music-top-left img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid white; animation: spin 5s linear infinite; }
+        .music-info { font-size: 11px; white-space: nowrap; overflow: hidden; }
+        .music-info b { display: block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+        .music-controls i { cursor: pointer; font-size: 16px; transition: 0.3s; color: rgba(255,255,255,0.8); }
+        .music-controls i:hover { color: white; text-shadow: 0 0 10px white; }
 
         /* NỘI DUNG CHÍNH */
         .header { text-align: center; margin-top: 100px; margin-bottom: 40px; }
-        .avatar { width: 120px; height: 120px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
 
-        /* HỆ THỐNG Ô (GRID) */
-        .grid-container {
-            display: grid; gap: 15px; width: 90%; max-width: 1000px;
-            padding-bottom: 50px;
-        }
-        
-        /* PC: 4 Cột | Mobile: 2 Cột */
+        .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
 
         .grid-item {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px; padding: 25px 15px; text-align: center;
-            text-decoration: none; color: white; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 20px; padding: 25px 10px; text-align: center;
+            text-decoration: none; color: white; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .grid-item i { font-size: 30px; margin-bottom: 15px; }
-        .grid-item b { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-        .grid-item:hover {
-            background: rgba(255, 255, 255, 0.15); transform: translateY(-10px);
-            border-color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
+        .grid-item i { font-size: 28px; margin-bottom: 12px; }
+        .grid-item b { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .grid-item:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-5px); border-color: white; }
 
-        /* Hiệu ứng kim tuyến & Tuyết */
-        .sparkle { position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s ease-out forwards; z-index: 999; }
-        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3) translateY(15px); } }
+        /* HIỆU ỨNG TRANG TRÍ */
+        .sparkle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s ease-out forwards; z-index: 999; }
+        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3) translateY(10px); } }
         .snowflake { position: fixed; top: -10px; color: white; font-size: 8px; animation: fall linear infinite; z-index: 1; }
         @keyframes fall { to { transform: translateY(105vh); } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -101,17 +94,17 @@
     <div class="music-top-left">
         <img id="m-logo" src="" alt="logo">
         <div class="music-info">
-            <b id="m-name">Tên bài hát</b><br>
-            <small id="status">Đang dừng...</small>
+            <b id="m-name">Tên bài hát</b>
+            <span id="status" style="opacity: 0.6;">Đang dừng...</span>
         </div>
-        <div class="music-controls">
+        <div class="music-controls" style="margin-left: auto;">
             <i id="playBtn" class="fas fa-play"></i>
         </div>
     </div>
 
     <div class="header">
         <img id="avatar" src="" class="avatar">
-        <h1 id="user-name"></h1>
+        <h1 id="user-name" style="font-size: 22px; margin-top: 15px;"></h1>
     </div>
 
     <div class="grid-container" id="grid-content"></div>
@@ -119,7 +112,6 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
-        // ĐIỀN DỮ LIỆU TỪ CONFIG
         document.getElementById('bg-img').style.backgroundImage = `url('${CONFIG.anh_nen}')`;
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
@@ -127,7 +119,6 @@
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
-        // Render các ô Grid
         const gridContent = CONFIG.items.map(item => `
             <a href="${item.url}" class="grid-item">
                 <i class="${item.icon}" style="color: ${item.mau}"></i>
@@ -136,7 +127,6 @@
         `).join('');
         document.getElementById('grid-content').innerHTML = gridContent;
 
-        // Xử lý nhạc tự động phát
         const audio = document.getElementById('myAudio');
         const playBtn = document.getElementById('playBtn');
         const statusText = document.getElementById('status');
@@ -145,39 +135,32 @@
             if (audio.paused) {
                 audio.play();
                 playBtn.className = "fas fa-pause";
-                statusText.innerText = "Đang phát... 🎵";
+                statusText.innerText = "Playing...";
             } else {
                 audio.pause();
                 playBtn.className = "fas fa-play";
-                statusText.innerText = "Đã dừng.";
+                statusText.innerText = "Paused.";
             }
         }
 
         playBtn.onclick = togglePlay;
-        // Tự động phát khi người dùng tương tác lần đầu
-        document.body.addEventListener('click', () => {
-            if(audio.paused) togglePlay();
-        }, { once: true });
+        document.body.addEventListener('click', () => { if(audio.paused) togglePlay(); }, { once: true });
 
-        // Hiệu ứng kim tuyến (Cursor Sparkles)
         document.addEventListener('mousemove', (e) => {
-            let s = document.createElement('div');
-            s.className = 'sparkle';
+            let s = document.createElement('div'); s.className = 'sparkle';
             s.style.left = e.pageX + 'px'; s.style.top = e.pageY + 'px';
             document.body.appendChild(s);
             setTimeout(() => s.remove(), 800);
         });
 
-        // Hiệu ứng tuyết rơi
         setInterval(() => {
             const snow = document.createElement('div');
             snow.className = 'snowflake'; snow.innerHTML = '❄';
             snow.style.left = Math.random() * 100 + 'vw';
-            snow.style.animationDuration = Math.random() * 3 + 4 + 's';
-            snow.style.opacity = Math.random();
+            snow.style.animationDuration = Math.random() * 3 + 5 + 's';
             document.body.appendChild(snow);
             setTimeout(() => snow.remove(), 6000);
-        }, 300);
+        }, 400);
     </script>
 </body>
 </html>
