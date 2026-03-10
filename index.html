@@ -3,67 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury Bio | 012tuong</title>
+    <title>Luxury Dashboard | 012tuong</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
         /* ============================================================
-        💎 BẢNG CÀI ĐẶT NHANH 
+        💎 BẢNG CÀI ĐẶT NHANH (SỬA TẠI ĐÂY)
         ============================================================ */
         const CONFIG = {
             ten_hien_thi: "Tường 🎂",
-            bio_ngan: "Chẳng cần bánh ngọt với kem. Chỉ cần em nói yêu anh, đủ rồi!",
             anh_dai_dien: "https://i.pinimg.com/736x/21/61/60/2161609169420076a591e1d279313931.jpg",
-            anh_nen_anime: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964",
+            anh_nen: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964",
             link_nhac_mp3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
             ten_bai_hat: "Đừng làm em buồn...",
-            
-            // Hình dạng con trỏ chuột (Bạn có thể thay bằng link ảnh .png nhỏ)
-            cursor_icon: "https://cur.cursors-4u.net/anime/ani-12/ani1159.cur", 
+            logo_bai_hat: "https://i.pinimg.com/originals/81/4f/98/814f982996d98d67f70b3e51d4590685.jpg",
 
-            socials: [
-                { icon: "fab fa-facebook", url: "https://facebook.com/cua-ban" },
-                { icon: "fab fa-tiktok", url: "https://tiktok.com/@cua-ban" },
-                { icon: "fab fa-instagram", url: "https://instagram.com/cua-ban" }
-            ],
-            links: [
-                { ten: "Box Giao Lưu Discord", icon: "fab fa-discord", url: "#" },
-                { ten: "Playerduo Donate", icon: "fas fa-heart", url: "#" }
-            ],
-            donates: [
-                { ten_vi: "MB BANK", stk: "0852389220", ten_nguoi_nhan: "NGUYEN VAN TUONG" }
+            // DANH SÁCH CÁC Ô (GRID) - Bạn có thể thêm/bớt các ô ở đây
+            items: [
+                { ten: "Facebook", icon: "fab fa-facebook", url: "#", mau: "#1877f2" },
+                { ten: "TikTok", icon: "fab fa-tiktok", url: "#", mau: "#000000" },
+                { ten: "Instagram", icon: "fab fa-instagram", url: "#", mau: "#e4405f" },
+                { ten: "Discord", icon: "fab fa-discord", url: "#", mau: "#5865f2" },
+                { ten: "Zalo", icon: "fas fa-comment", url: "#", mau: "#0068ff" },
+                { ten: "Donate Momo", icon: "fas fa-wallet", url: "#", mau: "#a50064" },
+                { ten: "MB Bank", icon: "fas fa-university", url: "#", mau: "#004a99" },
+                { ten: "YouTube", icon: "fab fa-youtube", url: "#", mau: "#ff0000" }
             ]
         };
     </script>
 
     <style>
+        :root { --accent: #ffffff; }
         body {
             margin: 0; padding: 0; background: #050505; color: white;
-            font-family: 'Montserrat', sans-serif; display: flex; justify-content: center;
+            font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; overflow-x: hidden;
-            /* Đổi hình dạng chuột */
             cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important;
         }
 
+        /* Nền & Hiệu ứng */
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: -1; }
-        .container { width: 100%; max-width: 420px; padding: 50px 20px; text-align: center; z-index: 10; }
-        .avatar { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid white; box-shadow: 0 0 25px rgba(255,255,255,0.2); margin-bottom: 15px; }
-        .glass-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; text-decoration: none; color: white; transition: 0.3s; }
-        .glass-card:hover { background: rgba(255, 255, 255, 0.15); transform: scale(1.02); border-color: white; }
-        .qr-box { background: white; color: black; border-radius: 15px; padding: 20px; margin-top: 25px; }
-
-        /* Hạt kim tuyến */
-        .sparkle {
-            position: absolute; width: 4px; height: 4px; background: white;
-            border-radius: 50%; pointer-events: none;
-            box-shadow: 0 0 10px white, 0 0 20px white;
-            animation: blink 0.8s ease-out forwards;
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: -1; }
+        
+        /* THANH NHẠC GÓC TRÁI TRÊN */
+        .music-top-left {
+            position: fixed; top: 20px; left: 20px; z-index: 100;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px;
+            backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3) translateY(20px); } }
+        .music-top-left img { width: 40px; height: 40px; border-radius: 8px; animation: spin 6s linear infinite; }
+        .music-info { font-size: 12px; max-width: 120px; }
+        .music-controls i { cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .music-controls i:hover { color: pink; }
 
-        .player { position: fixed; bottom: 20px; width: 320px; background: rgba(0,0,0,0.85); border-radius: 50px; padding: 10px 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.1); z-index: 99; }
+        /* NỘI DUNG CHÍNH */
+        .header { text-align: center; margin-top: 100px; margin-bottom: 40px; }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+
+        /* HỆ THỐNG Ô (GRID) */
+        .grid-container {
+            display: grid; gap: 15px; width: 90%; max-width: 1000px;
+            padding-bottom: 50px;
+        }
+        
+        /* PC: 4 Cột | Mobile: 2 Cột */
+        @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+
+        .grid-item {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 25px 15px; text-align: center;
+            text-decoration: none; color: white; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .grid-item i { font-size: 30px; margin-bottom: 15px; }
+        .grid-item b { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .grid-item:hover {
+            background: rgba(255, 255, 255, 0.15); transform: translateY(-10px);
+            border-color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Hiệu ứng kim tuyến & Tuyết */
+        .sparkle { position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s ease-out forwards; z-index: 999; }
+        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3) translateY(15px); } }
+        .snowflake { position: fixed; top: -10px; color: white; font-size: 8px; animation: fall linear infinite; z-index: 1; }
+        @keyframes fall { to { transform: translateY(105vh); } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -71,52 +98,86 @@
     <div id="bg-img" class="bg"></div>
     <div class="overlay"></div>
 
-    <div class="container" id="main-content"></div>
-
-    <div class="player">
-        <i class="fas fa-compact-disc fa-spin" style="font-size: 30px; color: pink;"></i>
-        <div style="flex-grow: 1; font-size: 11px;">
-            <b id="song-name">Đang tải...</b><br>
-            <small>Chạm để nghe nhạc 🎵</small>
+    <div class="music-top-left">
+        <img id="m-logo" src="" alt="logo">
+        <div class="music-info">
+            <b id="m-name">Tên bài hát</b><br>
+            <small id="status">Đang dừng...</small>
         </div>
-        <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
+        <div class="music-controls">
+            <i id="playBtn" class="fas fa-play"></i>
+        </div>
     </div>
 
+    <div class="header">
+        <img id="avatar" src="" class="avatar">
+        <h1 id="user-name"></h1>
+    </div>
+
+    <div class="grid-container" id="grid-content"></div>
+
+    <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
+
     <script>
-        // ĐIỀN DỮ LIỆU
-        document.getElementById('bg-img').style.backgroundImage = `url('${CONFIG.anh_nen_anime}')`;
+        // ĐIỀN DỮ LIỆU TỪ CONFIG
+        document.getElementById('bg-img').style.backgroundImage = `url('${CONFIG.anh_nen}')`;
+        document.getElementById('avatar').src = CONFIG.anh_dai_dien;
+        document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
+        document.getElementById('m-logo').src = CONFIG.logo_bai_hat;
+        document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
-        document.getElementById('song-name').innerText = CONFIG.ten_bai_hat;
 
-        document.getElementById('main-content').innerHTML = `
-            <img src="${CONFIG.anh_dai_dien}" class="avatar">
-            <h1>${CONFIG.ten_hien_thi}</h1>
-            <p style="font-size: 13px; margin-bottom: 25px;">${CONFIG.bio_ngan}</p>
-            <div style="margin-bottom: 25px;">
-                ${CONFIG.socials.map(s => `<a href="${s.url}" style="color:white; margin: 0 12px; font-size: 22px;"><i class="${s.icon}"></i></a>`).join('')}
-            </div>
-            ${CONFIG.links.map(l => `<a href="${l.url}" class="glass-card"><i class="${l.icon}" style="width:40px;"></i><b>${l.ten}</b></a>`).join('')}
-            ${CONFIG.donates.map(d => `<div class="qr-box"><b>QUYÊN GÓP ${d.ten_vi}</b><br><img style="width:100%" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${d.stk}"><br><b>${d.ten_nguoi_nhan}</b></div>`).join('')}
-        `;
+        // Render các ô Grid
+        const gridContent = CONFIG.items.map(item => `
+            <a href="${item.url}" class="grid-item">
+                <i class="${item.icon}" style="color: ${item.mau}"></i>
+                <b>${item.ten}</b>
+            </a>
+        `).join('');
+        document.getElementById('grid-content').innerHTML = gridContent;
 
-        // NHẠC
-        document.body.onclick = () => { document.getElementById('myAudio').play(); };
+        // Xử lý nhạc tự động phát
+        const audio = document.getElementById('myAudio');
+        const playBtn = document.getElementById('playBtn');
+        const statusText = document.getElementById('status');
 
-        // HIỆU ỨNG KIM TUYẾN KHI DI CHUỘT
-        document.addEventListener('mousemove', function(e) {
-            let sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.left = e.pageX + 'px';
-            sparkle.style.top = e.pageY + 'px';
-            
-            // Làm hạt kim tuyến bay ngẫu nhiên nhẹ
-            let size = Math.random() * 5;
-            sparkle.style.width = size + 'px';
-            sparkle.style.height = size + 'px';
-            
-            document.body.appendChild(sparkle);
-            setTimeout(() => { sparkle.remove(); }, 800);
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playBtn.className = "fas fa-pause";
+                statusText.innerText = "Đang phát... 🎵";
+            } else {
+                audio.pause();
+                playBtn.className = "fas fa-play";
+                statusText.innerText = "Đã dừng.";
+            }
+        }
+
+        playBtn.onclick = togglePlay;
+        // Tự động phát khi người dùng tương tác lần đầu
+        document.body.addEventListener('click', () => {
+            if(audio.paused) togglePlay();
+        }, { once: true });
+
+        // Hiệu ứng kim tuyến (Cursor Sparkles)
+        document.addEventListener('mousemove', (e) => {
+            let s = document.createElement('div');
+            s.className = 'sparkle';
+            s.style.left = e.pageX + 'px'; s.style.top = e.pageY + 'px';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 800);
         });
+
+        // Hiệu ứng tuyết rơi
+        setInterval(() => {
+            const snow = document.createElement('div');
+            snow.className = 'snowflake'; snow.innerHTML = '❄';
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.animationDuration = Math.random() * 3 + 4 + 's';
+            snow.style.opacity = Math.random();
+            document.body.appendChild(snow);
+            setTimeout(() => snow.remove(), 6000);
+        }, 300);
     </script>
 </body>
 </html>
