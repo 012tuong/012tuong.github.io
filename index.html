@@ -8,25 +8,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
-        /* ============================================================
-        💎 BẢNG CÀI ĐẶT NHANH (SỬA TẠI ĐÂY)
-        ============================================================ */
         const CONFIG = {
             ten_hien_thi: "Tường 🎂",
-            anh_dai_dien: "https://i.pinimg.com/originals/e1/93/9c/e1939c0e359a35e69e000445d0701048.jpg", // 😻 ẢNH CUTE MẪU
+            anh_dai_dien: "https://i.pinimg.com/originals/e1/93/9c/e1939c0e359a35e69e000445d0701048.jpg", 
             anh_nen: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964",
             link_nhac_mp3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
             ten_bai_hat: "Đừng làm em buồn...",
-            logo_bai_hat: "https://i.pinimg.com/736x/8f/30/80/8f3080c5f21295250495392e62e0802c.jpg", // 😻 LOGO CUTE MẪU
+            logo_bai_hat: "https://i.pinimg.com/736x/8f/30/80/8f3080c5f21295250495392e62e0802c.jpg",
 
-            // DANH SÁCH CÁC Ô (GRID)
             items: [
                 { ten: "Facebook", icon: "fab fa-facebook", url: "#", mau: "#1877f2" },
                 { ten: "TikTok", icon: "fab fa-tiktok", url: "#", mau: "#ffffff" },
                 { ten: "Instagram", icon: "fab fa-instagram", url: "#", mau: "#e4405f" },
                 { ten: "Discord", icon: "fab fa-discord", url: "#", mau: "#5865f2" },
                 { ten: "Zalo", icon: "fas fa-comment", url: "#", mau: "#0068ff" },
-                { ten: "Donate Momo", icon: "fas fa-wallet", url: "#", mau: "#a50064" },
+                { ten: "Momo", icon: "fas fa-wallet", url: "#", mau: "#a50064" },
                 { ten: "MB Bank", icon: "fas fa-university", url: "#", mau: "#004a99" },
                 { ten: "YouTube", icon: "fab fa-youtube", url: "#", mau: "#ff0000" }
             ]
@@ -34,81 +30,80 @@
     </script>
 
     <style>
-        :root { --accent: #ffffff; }
-        body {
-            margin: 0; padding: 0; background: #050505; color: white;
-            font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
-            cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important;
-        }
-
+        body { margin: 0; padding: 0; background: #050505; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important; }
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: -1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: -1; }
         
-        /* 🎵 THANH NHẠC NHỎ DÀI */
-        .music-top-left {
-            position: fixed; top: 15px; left: 15px; z-index: 100;
-            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 20px; border-radius: 30px;
-            display: flex; align-items: center; gap: 15px;
-            backdrop-filter: blur(15px); box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            min-width: 280px;
-        }
-        .music-top-left img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid white; animation: spin 5s linear infinite; }
-        .music-info { font-size: 11px; white-space: nowrap; overflow: hidden; }
-        .music-info b { display: block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
-        .music-controls i { cursor: pointer; font-size: 16px; transition: 0.3s; color: rgba(255,255,255,0.8); }
-        .music-controls i:hover { color: white; text-shadow: 0 0 10px white; }
+        /* THANH NHẠC GÓC TRÁI */
+        .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 15px; border-radius: 30px; display: flex; align-items: center; gap: 12px; backdrop-filter: blur(15px); min-width: 220px; }
+        .music-top-left img { width: 30px; height: 30px; border-radius: 50%; animation: spin 5s linear infinite; }
+        .music-info { font-size: 10px; flex-grow: 1; }
+        
+        /* VOLUME CONTROL */
+        .volume-container { display: flex; align-items: center; gap: 8px; position: relative; }
+        .volume-slider { width: 0; opacity: 0; transition: 0.3s; height: 4px; cursor: pointer; accent-color: white; }
+        .volume-container:hover .volume-slider { width: 60px; opacity: 1; }
 
-        /* NỘI DUNG CHÍNH */
-        .header { text-align: center; margin-top: 100px; margin-bottom: 40px; }
-        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        /* THANH TIẾN TRÌNH DƯỚI TÊN */
+        .progress-wrapper { width: 250px; margin: 10px auto; font-size: 12px; }
+        .progress-bar-container { background: rgba(255,255,255,0.2); height: 4px; border-radius: 10px; margin: 5px 0; position: relative; overflow: hidden; cursor: pointer; }
+        .progress-fill { background: #ff79c6; height: 100%; width: 0%; box-shadow: 0 0 10px #ff79c6; }
+        .time-info { display: flex; justify-content: space-between; font-size: 10px; opacity: 0.8; }
+
+        .header { text-align: center; margin-top: 100px; margin-bottom: 30px; }
+        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; }
 
         .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
 
-        .grid-item {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px; padding: 25px 10px; text-align: center;
-            text-decoration: none; color: white; transition: 0.4s;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .grid-item i { font-size: 28px; margin-bottom: 12px; }
-        .grid-item b { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
-        .grid-item:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-5px); border-color: white; }
+        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
+        .grid-item i { font-size: 25px; margin-bottom: 10px; }
+        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
 
-        /* HIỆU ỨNG TRANG TRÍ */
-        .sparkle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s ease-out forwards; z-index: 999; }
-        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3) translateY(10px); } }
-        .snowflake { position: fixed; top: -10px; color: white; font-size: 8px; animation: fall linear infinite; z-index: 1; }
-        @keyframes fall { to { transform: translateY(105vh); } }
+        /* Sparkle effect */
+        .sparkle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s forwards; z-index: 999; }
+        @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0; transform: scale(3) translateY(10px); } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        /* Lớp phủ yêu cầu click để phát nhạc */
+        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <div id="play-overlay"><b>🎵 Chạm để bắt đầu trải nghiệm 🎵</b></div>
     <div id="bg-img" class="bg"></div>
     <div class="overlay"></div>
 
     <div class="music-top-left">
-        <img id="m-logo" src="" alt="logo">
+        <img id="m-logo" src="">
         <div class="music-info">
-            <b id="m-name">Tên bài hát</b>
-            <span id="status" style="opacity: 0.6;">Đang dừng...</span>
+            <b id="m-name">Đang tải...</b>
         </div>
-        <div class="music-controls" style="margin-left: auto;">
-            <i id="playBtn" class="fas fa-play"></i>
+        <div class="volume-container">
+            <i id="muteBtn" class="fas fa-volume-up"></i>
+            <input type="range" class="volume-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
         </div>
+        <i id="playBtn" class="fas fa-play" style="cursor:pointer"></i>
     </div>
 
     <div class="header">
         <img id="avatar" src="" class="avatar">
-        <h1 id="user-name" style="font-size: 22px; margin-top: 15px;"></h1>
+        <h1 id="user-name" style="margin:0"></h1>
+        
+        <div class="progress-wrapper">
+            <div class="time-info">
+                <span id="currTime">0:00</span>
+                <span id="totalTime">0:00</span>
+            </div>
+            <div class="progress-bar-container" id="progressArea">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
     </div>
 
     <div class="grid-container" id="grid-content"></div>
-
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
@@ -119,48 +114,59 @@
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
-        const gridContent = CONFIG.items.map(item => `
-            <a href="${item.url}" class="grid-item">
-                <i class="${item.icon}" style="color: ${item.mau}"></i>
-                <b>${item.ten}</b>
-            </a>
-        `).join('');
+        const gridContent = CONFIG.items.map(item => `<a href="${item.url}" class="grid-item"><i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b></a>`).join('');
         document.getElementById('grid-content').innerHTML = gridContent;
 
         const audio = document.getElementById('myAudio');
         const playBtn = document.getElementById('playBtn');
-        const statusText = document.getElementById('status');
+        const progressFill = document.getElementById('progressFill');
+        const currTimeTxt = document.getElementById('currTime');
+        const totalTimeTxt = document.getElementById('totalTime');
+        const volumeSlider = document.getElementById('volumeControl');
 
-        function togglePlay() {
-            if (audio.paused) {
-                audio.play();
-                playBtn.className = "fas fa-pause";
-                statusText.innerText = "Playing...";
-            } else {
-                audio.pause();
-                playBtn.className = "fas fa-play";
-                statusText.innerText = "Paused.";
-            }
+        // Phát nhạc & Ẩn overlay
+        document.getElementById('play-overlay').onclick = function() {
+            this.style.display = 'none';
+            audio.play();
+            playBtn.className = "fas fa-pause";
+        };
+
+        playBtn.onclick = () => {
+            if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause"; }
+            else { audio.pause(); playBtn.className = "fas fa-play"; }
+        };
+
+        // Âm lượng
+        volumeSlider.oninput = (e) => { audio.volume = e.target.value; };
+
+        // Cập nhật thanh tiến trình
+        audio.ontimeupdate = () => {
+            const pct = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = pct + "%";
+            currTimeTxt.innerText = formatTime(audio.currentTime);
+            if (!isNaN(audio.duration)) totalTimeTxt.innerText = formatTime(audio.duration);
+        };
+
+        function formatTime(sec) {
+            let m = Math.floor(sec / 60);
+            let s = Math.floor(sec % 60);
+            return m + ":" + (s < 10 ? "0" + s : s);
         }
 
-        playBtn.onclick = togglePlay;
-        document.body.addEventListener('click', () => { if(audio.paused) togglePlay(); }, { once: true });
+        // Tua nhạc khi click thanh tiến trình
+        document.getElementById('progressArea').onclick = (e) => {
+            const width = e.currentTarget.clientWidth;
+            const clickX = e.offsetX;
+            audio.currentTime = (clickX / width) * audio.duration;
+        };
 
+        // Hiệu ứng kim tuyến
         document.addEventListener('mousemove', (e) => {
             let s = document.createElement('div'); s.className = 'sparkle';
             s.style.left = e.pageX + 'px'; s.style.top = e.pageY + 'px';
             document.body.appendChild(s);
             setTimeout(() => s.remove(), 800);
         });
-
-        setInterval(() => {
-            const snow = document.createElement('div');
-            snow.className = 'snowflake'; snow.innerHTML = '❄';
-            snow.style.left = Math.random() * 100 + 'vw';
-            snow.style.animationDuration = Math.random() * 3 + 5 + 's';
-            document.body.appendChild(snow);
-            setTimeout(() => snow.remove(), 6000);
-        }, 400);
     </script>
 </body>
 </html>
