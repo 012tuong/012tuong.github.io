@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury Dashboard | 012tuong</title>
+    <title>@012tuong | Luxury Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
         const CONFIG = {
-            ten_hien_thi: "Tường 🎂",
+            ten_hien_thi: "Tường",
             anh_dai_dien: "https://i.pinimg.com/originals/e1/93/9c/e1939c0e359a35e69e000445d0701048.jpg", 
             anh_nen: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964",
             link_nhac_mp3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-            ten_bai_hat: "Đừng làm em buồn...",
+            ten_bai_hat: "Đừng làm em buồn... Chúc bạn một ngày tốt lành!", // Chữ sẽ chạy
 
             items: [
                 { ten: "Facebook", icon: "fab fa-facebook", url: "#", mau: "#1877f2" },
@@ -33,54 +33,56 @@
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: -1; }
         
-        /* THANH NHẠC GÓC TRÁI */
-        .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 8px 20px; border-radius: 30px; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(15px); }
-        .music-info { font-size: 11px; }
+        /* THANH NHẠC GÓC TRÁI VỚI CHỮ CHẠY */
+        .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 8px 20px; border-radius: 30px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(15px); width: 220px; overflow: hidden; }
+        
+        .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; }
+        .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; font-size: 11px; font-weight: bold; }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
         .volume-container { display: flex; align-items: center; gap: 8px; }
         .volume-slider { width: 0; opacity: 0; transition: 0.3s; height: 4px; cursor: pointer; accent-color: white; }
-        .volume-container:hover .volume-slider { width: 60px; opacity: 1; }
+        .volume-container:hover .volume-slider { width: 50px; opacity: 1; }
 
         /* CỤM PLAYER TRUNG TÂM */
         .header { text-align: center; margin-top: 100px; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; }
+        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
-        /* Thanh tiến trình rộng bằng Avatar và căn giữa */
         .player-controls { width: 280px; margin-top: 15px; }
         .progress-bar-container { background: rgba(255,255,255,0.2); height: 5px; border-radius: 10px; margin: 8px 0; position: relative; overflow: hidden; cursor: pointer; }
         .progress-fill { background: #ff79c6; height: 100%; width: 0%; box-shadow: 0 0 10px #ff79c6; transition: width 0.1s linear; }
         .time-info { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: bold; }
 
-        /* Nút Play nằm chính giữa */
         .main-btns { display: flex; justify-content: center; align-items: center; margin-top: 10px; }
         .play-main-btn { font-size: 28px; cursor: pointer; transition: 0.3s; color: white; }
         .play-main-btn:hover { transform: scale(1.1); color: #ff79c6; }
 
-        /* GRID */
+        /* GRID CÁC Ô */
         .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
         .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
         .grid-item i { font-size: 25px; margin-bottom: 10px; }
-        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
+        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
 
         .sparkle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s forwards; z-index: 999; }
         @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0; transform: scale(3) translateY(10px); } }
-        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <div id="play-overlay"><b>✨ CHẠM ĐỂ BẮT ĐẦU ✨</b></div>
+    <div id="play-overlay">✨ CLICK TO START ✨</div>
     <div id="bg-img" class="bg"></div>
     <div class="overlay"></div>
 
     <div class="music-top-left">
-        <div class="music-info">
-            <i class="fas fa-music" style="margin-right: 8px; color: #ff79c6;"></i>
-            <b id="m-name">Đang tải...</b>
+        <i class="fas fa-compact-disc fa-spin" style="color: #ff79c6;"></i>
+        <div class="marquee-container">
+            <div class="marquee-text" id="m-name">Đang tải...</div>
         </div>
         <div class="volume-container">
-            <i class="fas fa-volume-up"></i>
+            <i class="fas fa-volume-up" style="font-size: 12px;"></i>
             <input type="range" class="volume-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
         </div>
     </div>
@@ -107,6 +109,13 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
+        // Hiệu ứng chạy tiêu đề trình duyệt @012tuong
+        let titleText = "@012tuong ";
+        setInterval(() => {
+            titleText = titleText.substring(1) + titleText.substring(0, 1);
+            document.title = titleText;
+        }, 300);
+
         document.getElementById('bg-img').style.backgroundImage = `url('${CONFIG.anh_nen}')`;
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
