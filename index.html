@@ -35,4 +35,88 @@
                 { ten_vi: "MB BANK", stk: "0852389220", ten_nguoi_nhan: "NGUYEN VAN TUONG" }
             ]
         };
-    </script
+    </script>
+
+    <style>
+        body {
+            margin: 0; padding: 0; background: #050505; color: white;
+            font-family: 'Montserrat', sans-serif; display: flex; justify-content: center;
+            min-height: 100vh; overflow-x: hidden;
+            /* Đổi hình dạng chuột */
+            cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important;
+        }
+
+        .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: -1; }
+        .container { width: 100%; max-width: 420px; padding: 50px 20px; text-align: center; z-index: 10; }
+        .avatar { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid white; box-shadow: 0 0 25px rgba(255,255,255,0.2); margin-bottom: 15px; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; text-decoration: none; color: white; transition: 0.3s; }
+        .glass-card:hover { background: rgba(255, 255, 255, 0.15); transform: scale(1.02); border-color: white; }
+        .qr-box { background: white; color: black; border-radius: 15px; padding: 20px; margin-top: 25px; }
+
+        /* Hạt kim tuyến */
+        .sparkle {
+            position: absolute; width: 4px; height: 4px; background: white;
+            border-radius: 50%; pointer-events: none;
+            box-shadow: 0 0 10px white, 0 0 20px white;
+            animation: blink 0.8s ease-out forwards;
+        }
+        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3) translateY(20px); } }
+
+        .player { position: fixed; bottom: 20px; width: 320px; background: rgba(0,0,0,0.85); border-radius: 50px; padding: 10px 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.1); z-index: 99; }
+    </style>
+</head>
+<body>
+
+    <div id="bg-img" class="bg"></div>
+    <div class="overlay"></div>
+
+    <div class="container" id="main-content"></div>
+
+    <div class="player">
+        <i class="fas fa-compact-disc fa-spin" style="font-size: 30px; color: pink;"></i>
+        <div style="flex-grow: 1; font-size: 11px;">
+            <b id="song-name">Đang tải...</b><br>
+            <small>Chạm để nghe nhạc 🎵</small>
+        </div>
+        <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
+    </div>
+
+    <script>
+        // ĐIỀN DỮ LIỆU
+        document.getElementById('bg-img').style.backgroundImage = `url('${CONFIG.anh_nen_anime}')`;
+        document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
+        document.getElementById('song-name').innerText = CONFIG.ten_bai_hat;
+
+        document.getElementById('main-content').innerHTML = `
+            <img src="${CONFIG.anh_dai_dien}" class="avatar">
+            <h1>${CONFIG.ten_hien_thi}</h1>
+            <p style="font-size: 13px; margin-bottom: 25px;">${CONFIG.bio_ngan}</p>
+            <div style="margin-bottom: 25px;">
+                ${CONFIG.socials.map(s => `<a href="${s.url}" style="color:white; margin: 0 12px; font-size: 22px;"><i class="${s.icon}"></i></a>`).join('')}
+            </div>
+            ${CONFIG.links.map(l => `<a href="${l.url}" class="glass-card"><i class="${l.icon}" style="width:40px;"></i><b>${l.ten}</b></a>`).join('')}
+            ${CONFIG.donates.map(d => `<div class="qr-box"><b>QUYÊN GÓP ${d.ten_vi}</b><br><img style="width:100%" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${d.stk}"><br><b>${d.ten_nguoi_nhan}</b></div>`).join('')}
+        `;
+
+        // NHẠC
+        document.body.onclick = () => { document.getElementById('myAudio').play(); };
+
+        // HIỆU ỨNG KIM TUYẾN KHI DI CHUỘT
+        document.addEventListener('mousemove', function(e) {
+            let sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = e.pageX + 'px';
+            sparkle.style.top = e.pageY + 'px';
+            
+            // Làm hạt kim tuyến bay ngẫu nhiên nhẹ
+            let size = Math.random() * 5;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            
+            document.body.appendChild(sparkle);
+            setTimeout(() => { sparkle.remove(); }, 800);
+        });
+    </script>
+</body>
+</html>
