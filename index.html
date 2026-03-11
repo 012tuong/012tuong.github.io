@@ -208,7 +208,7 @@
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
         // HIỆU ỨNG TYPEWRITER CHO TITLE TRÌNH DUYỆT
-        const titleText = "@Tường | Luxury ";
+        const titleText = "@Tường";
         let charIndex = 0;
         let isDeleting = false;
         
@@ -218,10 +218,10 @@
 
             if (!isDeleting && charIndex < titleText.length) {
                 charIndex++;
-                setTimeout(typeEffect, 200); 
+                setTimeout(typeEffect, 400); 
             } else if (isDeleting && charIndex > 0) {
                 charIndex--;
-                setTimeout(typeEffect, 100); 
+                setTimeout(typeEffect, 200); 
             } else {
                 isDeleting = !isDeleting;
                 setTimeout(typeEffect, isDeleting ? 2000 : 500);
