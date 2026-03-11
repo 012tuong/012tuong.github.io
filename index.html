@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@012tuong | Luxury Dashboard</title>
+    <title>@Tường | Luxury</title>
+    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/ttttt.jpg">
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -41,7 +43,7 @@
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        /* BOX NHẠC GÓC TRÁI - SIÊU GỌN (120px) */
+        /* BOX NHẠC GÓC TRÁI */
         .music-top-left, .view-counter-top-right { 
             position: fixed; top: 15px; z-index: 100; 
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -81,7 +83,6 @@
             width: 25px; height: 25px;
         }
         
-        /* THANH TIẾN TRÌNH CÓ CỤC NHỎ (THUMB) */
         .progress-bar-container { 
             flex-grow: 1; background: rgba(255,255,255,0.15); 
             height: 6px; border-radius: 10px; cursor: pointer; position: relative;
@@ -91,7 +92,6 @@
             background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; 
             box-shadow: 0 0 10px #ff79c6; position: relative;
         }
-        /* CỤC NHỎ ĐỂ KÉO */
         .progress-fill::after {
             content: ""; position: absolute; right: -6px; top: 50%;
             transform: translateY(-50%); width: 12px; height: 12px;
@@ -188,10 +188,33 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
+        // Cấu hình ban đầu
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
+
+        // HIỆU ỨNG TYPEWRITER CHO TITLE TRÌNH DUYỆT
+        const titleText = "@Tường | Luxury ";
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function typeEffect() {
+            const currentTitle = titleText.substring(0, charIndex);
+            document.title = currentTitle + (isDeleting ? "" : "|");
+
+            if (!isDeleting && charIndex < titleText.length) {
+                charIndex++;
+                setTimeout(typeEffect, 200); // Tốc độ gõ
+            } else if (isDeleting && charIndex > 0) {
+                charIndex--;
+                setTimeout(typeEffect, 100); // Tốc độ xóa (nhanh hơn gõ)
+            } else {
+                isDeleting = !isDeleting;
+                setTimeout(typeEffect, isDeleting ? 2000 : 500); // Thời gian chờ ở 2 đầu
+            }
+        }
+        typeEffect(); // Khởi chạy hiệu ứng tiêu đề
 
         function handleViewCounter() {
             let views = localStorage.getItem('bio_view_count') || 1000;
