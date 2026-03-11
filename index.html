@@ -11,7 +11,6 @@
         const CONFIG = {
             ten_hien_thi: "Tường",
             anh_dai_dien: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/ttttt.jpg", 
-            // LINK NHẠC ĐÃ ĐƯỢC CẬP NHẬT
             link_nhac_mp3: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/Iu%20La%20Day.mp3",
             ten_bai_hat: "Iu Là Đây...", 
             video_nen: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4",
@@ -42,14 +41,14 @@
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        /* BOX NHẠC GÓC TRÁI - GỌN HƠN */
+        /* BOX NHẠC GÓC TRÁI - SIÊU GỌN (120px) */
         .music-top-left, .view-counter-top-right { 
             position: fixed; top: 15px; z-index: 100; 
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
             padding: 5px 12px; border-radius: 30px; display: flex; align-items: center; 
             backdrop-filter: blur(15px); height: 32px; box-sizing: border-box;
         }
-        .music-top-left { left: 15px; width: 160px; gap: 6px; }
+        .music-top-left { left: 15px; width: 120px; gap: 6px; }
         .view-counter-top-right { right: 15px; gap: 8px; font-size: 12px; font-weight: bold; }
 
         .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
@@ -68,28 +67,42 @@
         #user-name { margin: 0; font-size: 32px; font-weight: 700; color: #fff; text-shadow: 0 0 10px #ff79c6; }
         .verified-tick { color: #1877f2; font-size: 24px; }
 
-        /* PLAYER CHÍNH - CĂN CHỈNH THẲNG HÀNG TUYỆT ĐỐI */
+        /* PLAYER CHÍNH */
         .player-controls { 
             width: 320px; margin: 0 auto; display: flex; 
             align-items: center; justify-content: center; 
-            gap: 10px; background: rgba(0,0,0,0.25);
-            padding: 8px 15px; border-radius: 25px;
+            gap: 12px; background: rgba(0,0,0,0.25);
+            padding: 10px 18px; border-radius: 25px;
         }
         .play-main-btn { 
-            font-size: 16px; /* Nhỏ lại theo yêu cầu */
+            font-size: 16px; 
             cursor: pointer; color: #ff79c6; 
             display: flex; align-items: center; justify-content: center;
-            width: 20px; height: 20px;
+            width: 25px; height: 25px;
         }
+        
+        /* THANH TIẾN TRÌNH CÓ CỤC NHỎ (THUMB) */
         .progress-bar-container { 
             flex-grow: 1; background: rgba(255,255,255,0.15); 
-            height: 4px; border-radius: 10px; cursor: pointer; position: relative;
+            height: 6px; border-radius: 10px; cursor: pointer; position: relative;
+            display: flex; align-items: center;
         }
-        .progress-fill { background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 8px #ff79c6; }
+        .progress-fill { 
+            background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; 
+            box-shadow: 0 0 10px #ff79c6; position: relative;
+        }
+        /* CỤC NHỎ ĐỂ KÉO */
+        .progress-fill::after {
+            content: ""; position: absolute; right: -6px; top: 50%;
+            transform: translateY(-50%); width: 12px; height: 12px;
+            background: #fff; border-radius: 50%; box-shadow: 0 0 8px #ff79c6;
+            transition: transform 0.2s;
+        }
+        .progress-bar-container:active .progress-fill::after { transform: translateY(-50%) scale(1.3); }
+
         .time-info { 
             display: flex; gap: 3px; font-size: 10px; 
             font-weight: bold; min-width: 60px; justify-content: flex-end; opacity: 0.9;
-            align-items: center; /* Đảm bảo thời gian cũng thẳng hàng */
         }
 
         .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; z-index: 1; }
@@ -99,20 +112,17 @@
         .grid-item i { font-size: 25px; margin-bottom: 10px; }
         .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
 
-        /* LỚP PHỦ CHỐNG BẤM XUYÊN */
         #play-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.95); z-index: 9999; 
             display: flex; justify-content: center; align-items: center; 
             cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center;
-            transition: opacity 0.5s ease, visibility 0.5s;
         }
 
         #qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .qr-content { background: #1a1a1a; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 85%; }
         .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
         .qr-content h3 { margin: 0; font-size: 18px; color: #ff79c6; }
-        .qr-content .owner-name { margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px; }
         .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
 
         .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; background-color: #ff79c6; box-shadow: 0 0 10px #ff79c6; pointer-events: none; z-index: 99999; animation: sparkleAnim 1s linear forwards; }
@@ -132,7 +142,7 @@
     <div id="qr-modal">
         <div class="qr-content">
             <h3 id="qr-title">Quét mã</h3>
-            <div class="owner-name">NGUYỄN VĂN TƯỜNG</div>
+            <div style="margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px;">NGUYỄN VĂN TƯỜNG</div>
             <img id="qr-img" src="" alt="QR Code">
             <button class="close-btn" onclick="closeQR()">ĐÓNG</button>
         </div>
@@ -156,7 +166,6 @@
 
     <div class="header">
         <img id="avatar" src="" class="avatar">
-        
         <div class="name-wrapper">
             <h1 id="user-name"></h1>
             <i class="fas fa-check-circle verified-tick"></i>
@@ -185,8 +194,7 @@
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
         function handleViewCounter() {
-            let views = localStorage.getItem('bio_view_count');
-            if (!views) views = 1000;
+            let views = localStorage.getItem('bio_view_count') || 1000;
             views = parseInt(views) + 1;
             localStorage.setItem('bio_view_count', views);
             document.getElementById('view-count').innerText = views.toLocaleString();
@@ -198,24 +206,9 @@
             sparkle.className = 'sparkle';
             sparkle.style.left = e.pageX + 'px';
             sparkle.style.top = e.pageY + 'px';
-            const colors = ['#ff79c6', '#bd93f9', '#ffffff'];
-            sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(sparkle);
             setTimeout(() => sparkle.remove(), 1000);
         });
-
-        setInterval(() => {
-            const nameEl = document.getElementById('user-name');
-            if(!nameEl) return;
-            const rect = nameEl.getBoundingClientRect();
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
-            sparkle.style.top = (rect.top + window.scrollY + Math.random() * rect.height) + 'px';
-            sparkle.style.width = '3px'; sparkle.style.height = '3px';
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 800);
-        }, 150);
 
         const gridContent = CONFIG.items.map(item => {
             if (item.url === "qr") {
@@ -240,31 +233,19 @@
         const audio = document.getElementById('myAudio');
         const video = document.getElementById('bg-video');
         const playBtn = document.getElementById('playBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const volSlider = document.getElementById('volumeControl');
         const overlay = document.getElementById('play-overlay');
+        const volSlider = document.getElementById('volumeControl');
+        const muteBtn = document.getElementById('muteBtn');
 
         function startEverything() {
-            document.body.style.pointerEvents = "none";
             overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
-            
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
             video.play().catch(() => { video.muted = true; video.play(); });
-            audio.load(); // Load lại để chắc chắn link mới hoạt động
             audio.play();
             playBtn.className = "fas fa-pause play-main-btn";
-
-            setTimeout(() => {
-                document.body.style.pointerEvents = "auto";
-                overlay.style.display = 'none';
-            }, 600);
         }
 
         overlay.onclick = startEverything;
-        overlay.ontouchstart = (e) => {
-            e.preventDefault(); 
-            startEverything();
-        };
 
         playBtn.onclick = () => {
             if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause play-main-btn"; }
@@ -293,10 +274,17 @@
             return m + ":" + (s < 10 ? "0" + s : s);
         }
 
-        document.getElementById('progressArea').onclick = (e) => {
-            const width = e.currentTarget.clientWidth;
-            audio.currentTime = (e.offsetX / width) * audio.duration;
-        };
+        const progressArea = document.getElementById('progressArea');
+        function scrub(e) {
+            const width = progressArea.clientWidth;
+            const clickX = e.type.includes('touch') ? e.touches[0].clientX - progressArea.getBoundingClientRect().left : e.offsetX;
+            audio.currentTime = (clickX / width) * audio.duration;
+        }
+        progressArea.onclick = scrub;
+        progressArea.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            scrub(e);
+        }, {passive: false});
     </script>
 </body>
 </html>
