@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@012tuong | Luxury Dashboard</title>
+    <title>@Tường | Luxury </title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -14,11 +14,9 @@
             link_nhac_mp3: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/Iu%20La%20Day.mp3",
             ten_bai_hat: "Iu Là Đây...", 
             video_nen: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4",
-
             qr_zalo: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/zalo.jpg",
             qr_momo: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/momo.jpg",
             qr_mbbank: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/mb.jpg",
-
             items: [
                 { ten: "Facebook", icon: "fab fa-facebook", url: "https://www.facebook.com/wall.2k4", mau: "#1877f2" },
                 { ten: "TikTok", icon: "fab fa-tiktok", url: "https://www.tiktok.com/@wall.2k4", mau: "#ffffff" },
@@ -41,127 +39,101 @@
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        /* BOX NHẠC GÓC TRÁI - SIÊU GỌN (120px) */
-        .music-top-left, .view-counter-top-right { 
-            position: fixed; top: 15px; z-index: 100; 
+        /* CANVAS HOA ANH ĐÀO */
+        #sakura-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 50; }
+
+        /* BOX NHẠC GÓC TRÁI */
+        .music-top-left { 
+            position: fixed; top: 15px; left: 15px; z-index: 100; 
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
             padding: 5px 12px; border-radius: 30px; display: flex; align-items: center; 
-            backdrop-filter: blur(15px); height: 32px; box-sizing: border-box;
+            backdrop-filter: blur(15px); height: 32px; width: 135px; gap: 6px;
         }
-        .music-top-left { left: 15px; width: 120px; gap: 6px; }
-        .view-counter-top-right { right: 15px; gap: 8px; font-size: 12px; font-weight: bold; }
+
+        /* SÓNG NHẠC MINI */
+        .visualizer { display: flex; align-items: flex-end; gap: 2px; height: 12px; width: 15px; }
+        .vis-bar { width: 2px; background: #ff79c6; border-radius: 1px; height: 30%; }
+        .playing .vis-bar { animation: dance 0.8s infinite alternate; }
+        .playing .vis-bar:nth-child(2) { animation-delay: 0.2s; }
+        .playing .vis-bar:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dance { from { height: 20%; } to { height: 100%; } }
 
         .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 8s linear infinite; font-size: 9px; font-weight: bold; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-        
-        .volume-container { display: flex; align-items: center; gap: 5px; }
-        .volume-slider { width: 0; opacity: 0; transition: 0.3s; height: 3px; cursor: pointer; accent-color: #ff79c6; }
-        .volume-container:hover .volume-slider { width: 35px; opacity: 1; }
-        #muteBtn { cursor: pointer; font-size: 11px; }
 
         .header { text-align: center; margin-top: 80px; margin-bottom: 30px; z-index: 1; position: relative; }
         .avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.2); margin-bottom: 10px; }
         
+        /* CHỮ TƯỜNG GRADIENT */
         .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        #user-name { margin: 0; font-size: 32px; font-weight: 700; color: #fff; text-shadow: 0 0 10px #ff79c6; }
+        #user-name { 
+            margin: 0; font-size: 32px; font-weight: 700; 
+            background: linear-gradient(90deg, #ff79c6, #bd93f9, #ff79c6);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
         .verified-tick { color: #1877f2; font-size: 24px; }
 
-        /* PLAYER CHÍNH */
-        .player-controls { 
-            width: 320px; margin: 0 auto; display: flex; 
-            align-items: center; justify-content: center; 
-            gap: 12px; background: rgba(0,0,0,0.25);
-            padding: 10px 18px; border-radius: 25px;
-        }
-        .play-main-btn { 
-            font-size: 16px; 
-            cursor: pointer; color: #ff79c6; 
-            display: flex; align-items: center; justify-content: center;
-            width: 25px; height: 25px;
-        }
-        
-        /* THANH TIẾN TRÌNH CÓ CỤC NHỎ (THUMB) */
-        .progress-bar-container { 
-            flex-grow: 1; background: rgba(255,255,255,0.15); 
-            height: 6px; border-radius: 10px; cursor: pointer; position: relative;
-            display: flex; align-items: center;
-        }
-        .progress-fill { 
-            background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; 
-            box-shadow: 0 0 10px #ff79c6; position: relative;
-        }
-        /* CỤC NHỎ ĐỂ KÉO */
-        .progress-fill::after {
-            content: ""; position: absolute; right: -6px; top: 50%;
-            transform: translateY(-50%); width: 12px; height: 12px;
-            background: #fff; border-radius: 50%; box-shadow: 0 0 8px #ff79c6;
-            transition: transform 0.2s;
-        }
-        .progress-bar-container:active .progress-fill::after { transform: translateY(-50%) scale(1.3); }
+        /* PLAYER */
+        .player-controls { width: 320px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 12px; background: rgba(0,0,0,0.25); padding: 10px 18px; border-radius: 25px; }
+        .play-main-btn { font-size: 16px; cursor: pointer; color: #ff79c6; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; }
+        .progress-bar-container { flex-grow: 1; background: rgba(255,255,255,0.15); height: 6px; border-radius: 10px; cursor: pointer; position: relative; display: flex; align-items: center; }
+        .progress-fill { background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px #ff79c6; position: relative; }
+        .progress-fill::after { content: ""; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 8px #ff79c6; transition: transform 0.2s; }
 
-        .time-info { 
-            display: flex; gap: 3px; font-size: 10px; 
-            font-weight: bold; min-width: 60px; justify-content: flex-end; opacity: 0.9;
-        }
-
-        .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; z-index: 1; }
+        /* GRID ITEM - TILT EFFECT */
+        .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; z-index: 1; perspective: 1000px; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
-        .grid-item i { font-size: 25px; margin-bottom: 10px; }
-        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
-
-        #play-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.95); z-index: 9999; 
-            display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center;
+        
+        .grid-item { 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; 
+            color: white; display: flex; flex-direction: column; align-items: center;
+            transition: transform 0.1s ease-out, background 0.3s;
+            transform-style: preserve-3d;
         }
+        .grid-item i { font-size: 25px; margin-bottom: 10px; transform: translateZ(20px); }
+        .grid-item b { transform: translateZ(10px); }
+        .grid-item:hover { background: rgba(255, 255, 255, 0.15); border-color: white; }
 
+        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; }
         #qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .qr-content { background: #1a1a1a; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 85%; }
         .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
-        .qr-content h3 { margin: 0; font-size: 18px; color: #ff79c6; }
         .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-
-        .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; background-color: #ff79c6; box-shadow: 0 0 10px #ff79c6; pointer-events: none; z-index: 99999; animation: sparkleAnim 1s linear forwards; }
-        @keyframes sparkleAnim { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0) translateY(50px); opacity: 0; } }
     </style>
 </head>
 <body>
 
+    <canvas id="sakura-canvas"></canvas>
     <div id="play-overlay">MỞ THẾ GIỚI CỦA TƯỜNG</div>
     
     <video id="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4">
     </video>
-    
     <div class="overlay"></div>
 
     <div id="qr-modal">
         <div class="qr-content">
-            <h3 id="qr-title">Quét mã</h3>
-            <div style="margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px;">NGUYỄN VĂN TƯỜNG</div>
-            <img id="qr-img" src="" alt="QR Code">
+            <h3 id="qr-title" style="color:#ff79c6">Quét mã</h3>
+            <div style="margin-bottom: 15px; font-weight: bold;">NGUYỄN VĂN TƯỜNG</div>
+            <img id="qr-img" src="">
             <button class="close-btn" onclick="closeQR()">ĐÓNG</button>
         </div>
     </div>
 
-    <div class="music-top-left">
-        <i class="fas fa-compact-disc fa-spin" style="color: #ff79c6; font-size: 14px;"></i>
+    <div class="music-top-left" id="musicBox">
+        <div class="visualizer">
+            <div class="vis-bar"></div><div class="vis-bar"></div><div class="vis-bar"></div><div class="vis-bar"></div>
+        </div>
         <div class="marquee-container">
             <div class="marquee-text" id="m-name">Đang tải...</div>
         </div>
-        <div class="volume-container">
-            <i class="fas fa-volume-up" id="muteBtn"></i>
-            <input type="range" class="volume-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
-        </div>
-    </div>
-
-    <div class="view-counter-top-right">
-        <i class="fas fa-eye" style="color: #ff79c6;"></i>
-        <span id="view-count">...</span>
     </div>
 
     <div class="header">
@@ -170,16 +142,13 @@
             <h1 id="user-name"></h1>
             <i class="fas fa-check-circle verified-tick"></i>
         </div>
-
         <div class="player-controls">
             <i id="playBtn" class="fas fa-play play-main-btn"></i>
             <div class="progress-bar-container" id="progressArea">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="time-info">
-                <span id="currTime">0:00</span>
-                <span>/</span>
-                <span id="totalTime">0:00</span>
+            <div style="font-size: 10px; font-weight: bold; min-width: 60px;">
+                <span id="currTime">0:00</span> / <span id="totalTime">0:00</span>
             </div>
         </div>
     </div>
@@ -188,78 +157,104 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
+        // INIT DATA & TAB TITLE RUNNING
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
-        function handleViewCounter() {
-            let views = localStorage.getItem('bio_view_count') || 1000;
-            views = parseInt(views) + 1;
-            localStorage.setItem('bio_view_count', views);
-            document.getElementById('view-count').innerText = views.toLocaleString();
-        }
-        handleViewCounter();
+        // HIỆU ỨNG TIÊU ĐỀ TAB CHẠY CHỮ
+        let tabTitle = "@" + CONFIG.ten_hien_thi + " | Luxury ";
+        setInterval(() => {
+            tabTitle = tabTitle.substring(1) + tabTitle.substring(0, 1);
+            document.title = tabTitle;
+        }, 300);
 
-        document.addEventListener('mousemove', function(e) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = e.pageX + 'px';
-            sparkle.style.top = e.pageY + 'px';
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 1000);
+        // GRID & TILT EFFECT
+        const gridContainer = document.getElementById('grid-content');
+        gridContainer.innerHTML = CONFIG.items.map(item => {
+            const isQR = item.url === "qr";
+            const attr = isQR ? `onclick="showQR('${item.ten}')"` : `href="${item.url}" target="_blank"`;
+            return `<div class="grid-item-wrap"><${isQR?'div':'a'} ${attr} class="grid-item">
+                <i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b>
+            </${isQR?'div':'a'}></div>`;
+        }).join('');
+
+        // TILT LOGIC
+        document.querySelectorAll('.grid-item').forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                const rect = item.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                const dx = x - xc;
+                const dy = y - yc;
+                item.style.transform = `rotateY(${dx / 10}deg) rotateX(${-dy / 10}deg) scale(1.05)`;
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+            });
         });
 
-        const gridContent = CONFIG.items.map(item => {
-            if (item.url === "qr") {
-                return `<div onclick="showQR('${item.ten}')" class="grid-item"><i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b></div>`;
+        // SAKURA EFFECT
+        const canvas = document.getElementById('sakura-canvas');
+        const ctx = canvas.getContext('2d');
+        let petals = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        class Petal {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 7 + 3;
+                this.speed = Math.random() * 1 + 0.5;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 2 - 1;
             }
-            return `<a href="${item.url}" target="_blank" class="grid-item"><i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b></a>`;
-        }).join('');
-        document.getElementById('grid-content').innerHTML = gridContent;
-
-        function showQR(type) {
-            const modal = document.getElementById('qr-modal');
-            const img = document.getElementById('qr-img');
-            const title = document.getElementById('qr-title');
-            title.innerText = "Quét mã " + type;
-            if (type === "Zalo") img.src = CONFIG.qr_zalo;
-            else if (type === "Momo") img.src = CONFIG.qr_momo;
-            else if (type === "MB Bank") img.src = CONFIG.qr_mbbank;
-            modal.style.display = "flex";
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffb7c5';
+                ctx.fill();
+                ctx.restore();
+            }
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.y / 50);
+                this.angle += this.spin;
+                if (this.y > canvas.height) { this.y = -10; this.x = Math.random() * canvas.width; }
+            }
         }
-        function closeQR() { document.getElementById('qr-modal').style.display = "none"; }
+        for (let i = 0; i < 50; i++) petals.push(new Petal());
+        function animateSakura() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateSakura);
+        }
+        animateSakura();
 
+        // AUDIO LOGIC
         const audio = document.getElementById('myAudio');
-        const video = document.getElementById('bg-video');
         const playBtn = document.getElementById('playBtn');
-        const overlay = document.getElementById('play-overlay');
-        const volSlider = document.getElementById('volumeControl');
-        const muteBtn = document.getElementById('muteBtn');
+        const musicBox = document.getElementById('musicBox');
 
         function startEverything() {
-            overlay.style.opacity = '0';
-            setTimeout(() => { overlay.style.display = 'none'; }, 500);
-            video.play().catch(() => { video.muted = true; video.play(); });
+            document.getElementById('play-overlay').style.display = 'none';
+            document.getElementById('bg-video').play();
             audio.play();
             playBtn.className = "fas fa-pause play-main-btn";
+            musicBox.classList.add('playing');
         }
-
-        overlay.onclick = startEverything;
+        document.getElementById('play-overlay').onclick = startEverything;
 
         playBtn.onclick = () => {
-            if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause play-main-btn"; }
-            else { audio.pause(); playBtn.className = "fas fa-play play-main-btn"; }
-        };
-
-        volSlider.oninput = (e) => {
-            audio.volume = e.target.value;
-            muteBtn.className = audio.volume == 0 ? "fas fa-volume-mute" : "fas fa-volume-up";
-        };
-
-        muteBtn.onclick = () => {
-            if(audio.volume > 0) { audio.volume = 0; volSlider.value = 0; muteBtn.className = "fas fa-volume-mute"; }
-            else { audio.volume = 1; volSlider.value = 1; muteBtn.className = "fas fa-volume-up"; }
+            if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause play-main-btn"; musicBox.classList.add('playing'); }
+            else { audio.pause(); playBtn.className = "fas fa-play play-main-btn"; musicBox.classList.remove('playing'); }
         };
 
         audio.ontimeupdate = () => {
@@ -274,17 +269,19 @@
             return m + ":" + (s < 10 ? "0" + s : s);
         }
 
-        const progressArea = document.getElementById('progressArea');
-        function scrub(e) {
-            const width = progressArea.clientWidth;
-            const clickX = e.type.includes('touch') ? e.touches[0].clientX - progressArea.getBoundingClientRect().left : e.offsetX;
-            audio.currentTime = (clickX / width) * audio.duration;
+        document.getElementById('progressArea').onclick = (e) => {
+            audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration;
+        };
+
+        function showQR(type) {
+            const img = document.getElementById('qr-img');
+            document.getElementById('qr-title').innerText = "Quét mã " + type;
+            if (type === "Zalo") img.src = CONFIG.qr_zalo;
+            else if (type === "Momo") img.src = CONFIG.qr_momo;
+            else if (type === "MB Bank") img.src = CONFIG.qr_mbbank;
+            document.getElementById('qr-modal').style.display = "flex";
         }
-        progressArea.onclick = scrub;
-        progressArea.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            scrub(e);
-        }, {passive: false});
+        function closeQR() { document.getElementById('qr-modal').style.display = "none"; }
     </script>
 </body>
 </html>
