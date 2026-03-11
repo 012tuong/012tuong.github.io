@@ -81,11 +81,31 @@
 </head>
 <body>
 
-    <div id="play-overlay">CHẠM ĐỂ KHÁM PHÁ THẾ GIỚI CỦA TƯỜNG</div>
+    <div id="play-overlay">KHÁM PHÁ THẾ GIỚI CỦA TƯỜNG</div>
     
-    <video id="bg-video" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5">
-        <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/hinh%20nen.mp4" type="video/mp4" muted>
-    </video>
+<video id="bg-video" autoplay muted loop playsinline preload="metadata" style="background-image: url('https://i.pinimg.com/736x/48/b6/2a/48b62acabb7cfb0dd1391ffe57bd92c2.jpg'); background-size: cover;">
+    <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/hinh%20nen.mp4" type="video/mp4">
+</video>
+
+<script>
+    var video = document.getElementById('bg-video');
+    
+    // Đảm bảo video luôn ở trạng thái tắt tiếng (Điều kiện bắt buộc của iPhone)
+    video.muted = true;
+
+    // Hàm kích hoạt video khi có tương tác (vì iPhone chặn autoplay file nặng)
+    function playVideo() {
+        video.play().catch(function(e) {
+            console.log("Safari vẫn chặn, đang thử lại...");
+            video.load(); // Buộc tải lại metadata
+            video.play();
+        });
+    }
+
+    // Lắng nghe mọi hành động chạm của người dùng để kích hoạt
+    document.addEventListener('touchstart', playVideo, {once: true});
+    document.addEventListener('click', playVideo, {once: true});
+</script>
     
     <div class="overlay"></div>
 
