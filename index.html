@@ -10,44 +10,45 @@
     <script>
         const CONFIG = {
             ten_hien_thi: "Tường",
-            anh_dai_dien: "https://r2.guns.lol/d9bd9b77-8ec4-49f1-9496-3c0c1cc67ca3.webp", 
+            // Đã sửa sang link raw để hiện ảnh
+            anh_dai_dien: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/ttttt.jpg", 
             link_nhac_mp3: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/Lyric%20Video%20_%20%C4%91%E1%BB%A9a%20n%C3%A0o%20l%C3%A0m%20em%20bu%E1%BB%93n_%20-%20Ph%C3%BAc%20Du%20ft%20(mp3cut.net).mp3",
             ten_bai_hat: "Đứa nào làm em buồn...", 
             video_nen: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4",
 
+            // Link ảnh QR của bạn (Thay link ảnh thật vào đây)
+            qr_zalo: "LINK_ANH_QR_ZALO",
+            qr_momo: "LINK_ANH_QR_MOMO",
+            qr_mbbank: "LINK_ANH_QR_MBBANK",
+
             items: [
                 { ten: "Facebook", icon: "fab fa-facebook", url: "https://www.facebook.com/wall.2k4", mau: "#1877f2" },
                 { ten: "TikTok", icon: "fab fa-tiktok", url: "https://www.tiktok.com/@wall.2k4", mau: "#ffffff" },
-                { ten: "Instagram", icon: "fab fa-instagram", url: "#", mau: "#e4405f" },
-                { ten: "Discord", icon: "fab fa-discord", url: "#", mau: "#5865f2" },
-                { ten: "Zalo", icon: "fas fa-comment", url: "#", mau: "#0068ff" },
-                { ten: "Momo", icon: "fas fa-wallet", url: "#", mau: "#a50064" },
-                { ten: "MB Bank", icon: "fas fa-university", url: "#", mau: "#004a99" },
-                { ten: "YouTube", icon: "fab fa-youtube", url: "#", mau: "#ff0000" }
+                { ten: "Instagram", icon: "fab fa-instagram", url: "https://www.instagram.com/wall_204/", mau: "#e4405f" },
+                { ten: "Discord", icon: "fab fa-discord", url: "https://discord.com/invite/pE7jSeYVd5", mau: "#5865f2" },
+                { ten: "Zalo", icon: "fas fa-comment", url: "qr", mau: "#0068ff" },
+                { ten: "Momo", icon: "fas fa-wallet", url: "qr", mau: "#a50064" },
+                { ten: "MB Bank", icon: "fas fa-university", url: "qr", mau: "#004a99" },
+                { ten: "YouTube", icon: "fab fa-youtube", url: "https://youtube.com", mau: "#ff0000" }
             ]
         };
     </script>
 
     <style>
         body { margin: 0; padding: 0; background: #000; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
-        /* VIDEO NỀN - KHÔNG MỜ */
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; backdrop-filter: none; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        /* MUSIC BOX (TOP LEFT) */
         .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 8px 15px; border-radius: 30px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(15px); width: 220px; }
         .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; font-size: 11px; font-weight: bold; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
         
-        /* VOLUME CONTROL */
         .volume-container { display: flex; align-items: center; gap: 5px; }
         .volume-slider { width: 0; opacity: 0; transition: 0.3s; height: 4px; cursor: pointer; accent-color: #ff79c6; }
         .volume-container:hover .volume-slider { width: 60px; opacity: 1; }
         #muteBtn { cursor: pointer; font-size: 14px; }
 
-        /* MAIN HEADER */
         .header { text-align: center; margin-top: 80px; margin-bottom: 30px; z-index: 1; }
         .avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.2); margin-bottom: 10px; }
         .player-controls { width: 280px; margin: 0 auto; }
@@ -55,18 +56,22 @@
         .progress-fill { background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 10px #ff79c6; }
         .time-info { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; }
         .play-main-btn { font-size: 30px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .play-main-btn:hover { transform: scale(1.1); color: #ff79c6; }
 
-        /* GRID SOCIAL */
         .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; z-index: 1; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
+        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .grid-item i { font-size: 25px; margin-bottom: 10px; }
         .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
 
-        /* OVERLAY KHI MỚI VÀO */
         #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center; }
+
+        /* MODAL QR CODE */
+        #qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .qr-content { background: #1a1a1a; padding: 20px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 80%; }
+        .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 5px solid white; }
+        .qr-content h3 { margin: 0 0 10px 0; font-size: 18px; color: #ff79c6; }
+        .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -78,6 +83,14 @@
     </video>
     
     <div class="overlay"></div>
+
+    <div id="qr-modal">
+        <div class="qr-content">
+            <h3 id="qr-title">Quét mã</h3>
+            <img id="qr-img" src="" alt="QR Code">
+            <button class="close-btn" onclick="closeQR()">ĐÓNG</button>
+        </div>
+    </div>
 
     <div class="music-top-left">
         <i class="fas fa-compact-disc fa-spin" style="color: #ff79c6;"></i>
@@ -109,14 +122,37 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
-        // Khởi tạo dữ liệu
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
-        const gridContent = CONFIG.items.map(item => `<a href="${item.url}" class="grid-item"><i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b></a>`).join('');
+        // Xử lý tạo nút bấm
+        const gridContent = CONFIG.items.map(item => {
+            if (item.url === "qr") {
+                return `<div onclick="showQR('${item.ten}')" class="grid-item"><i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b></div>`;
+            }
+            return `<a href="${item.url}" target="_blank" class="grid-item"><i class="${item.icon}" style="color: ${item.mau}"></i><b>${item.ten}</b></a>`;
+        }).join('');
         document.getElementById('grid-content').innerHTML = gridContent;
+
+        // Hàm hiển thị QR
+        function showQR(type) {
+            const modal = document.getElementById('qr-modal');
+            const img = document.getElementById('qr-img');
+            const title = document.getElementById('qr-title');
+            
+            title.innerText = "Quét mã " + type;
+            if (type === "Zalo") img.src = CONFIG.qr_zalo;
+            else if (type === "Momo") img.src = CONFIG.qr_momo;
+            else if (type === "MB Bank") img.src = CONFIG.qr_mbbank;
+            
+            modal.style.display = "flex";
+        }
+
+        function closeQR() {
+            document.getElementById('qr-modal').style.display = "none";
+        }
 
         const audio = document.getElementById('myAudio');
         const video = document.getElementById('bg-video');
@@ -125,15 +161,12 @@
         const volSlider = document.getElementById('volumeControl');
         const overlay = document.getElementById('play-overlay');
 
-        // HÀM ÉP CHẠY CHO IPHONE/SAFARI
         function startEverything() {
             overlay.style.display = 'none';
-            // Ép video chạy trước
             video.play().catch(() => {
                 video.muted = true;
                 video.play();
             });
-            // Ép nhạc chạy sau
             audio.play();
             playBtn.className = "fas fa-pause";
         }
@@ -141,17 +174,14 @@
         overlay.onclick = startEverything;
         overlay.ontouchstart = startEverything;
 
-        // Điều khiển Play/Pause nhạc
         playBtn.onclick = () => {
             if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause"; }
             else { audio.pause(); playBtn.className = "fas fa-play"; }
         };
 
-        // Điều khiển Volume & Mute
         volSlider.oninput = (e) => {
             audio.volume = e.target.value;
-            if(audio.volume == 0) muteBtn.className = "fas fa-volume-mute";
-            else muteBtn.className = "fas fa-volume-up";
+            muteBtn.className = audio.volume == 0 ? "fas fa-volume-mute" : "fas fa-volume-up";
         };
 
         muteBtn.onclick = () => {
@@ -159,7 +189,6 @@
             else { audio.volume = 1; volSlider.value = 1; muteBtn.className = "fas fa-volume-up"; }
         };
 
-        // Thanh Progress bài hát
         audio.ontimeupdate = () => {
             const pct = (audio.currentTime / audio.duration) * 100;
             document.getElementById('progressFill').style.width = pct + "%";
