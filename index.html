@@ -29,9 +29,8 @@
     </script>
 
     <style>
-        body { margin: 0; padding: 0; background: #050505; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important; }
+        body { margin: 0; padding: 0; background: #000; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        /* TỐI ƯU VIDEO NỀN CHO DI ĐỘNG */
         #bg-video { 
             position: fixed; 
             top: 0; 
@@ -40,7 +39,7 @@
             height: 100%; 
             object-fit: cover; 
             z-index: -2;
-            background-color: #000; /* Hiển thị nền đen trong lúc tải */
+            pointer-events: none;
         }
         
         .overlay { 
@@ -53,42 +52,39 @@
             z-index: -1; 
         }
         
-        .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 8px 20px; border-radius: 30px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(15px); width: 220px; overflow: hidden; }
-        .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; }
+        /* Giao diện Header & Player */
+        .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 8px 20px; border-radius: 30px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(15px); width: 200px; overflow: hidden; }
+        .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; font-size: 11px; font-weight: bold; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-        .volume-container { display: flex; align-items: center; gap: 8px; }
-        .volume-slider { width: 0; opacity: 0; transition: 0.3s; height: 4px; cursor: pointer; accent-color: white; }
-        .volume-container:hover .volume-slider { width: 50px; opacity: 1; }
 
         .header { text-align: center; margin-top: 80px; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-        .player-controls { width: 260px; margin-top: 10px; }
-        .progress-bar-container { background: rgba(255,255,255,0.2); height: 5px; border-radius: 10px; margin: 8px 0; position: relative; overflow: hidden; cursor: pointer; }
-        .progress-fill { background: #ff79c6; height: 100%; width: 0%; box-shadow: 0 0 10px #ff79c6; transition: width 0.1s linear; }
-        .time-info { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: bold; }
-        .main-btns { display: flex; justify-content: center; align-items: center; margin-top: 10px; }
-        .play-main-btn { font-size: 28px; cursor: pointer; transition: 0.3s; color: white; }
-        .play-main-btn:hover { transform: scale(1.1); color: #ff79c6; }
+        .avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; }
+        .player-controls { width: 260px; }
+        .progress-bar-container { background: rgba(255,255,255,0.2); height: 5px; border-radius: 10px; margin: 8px 0; position: relative; overflow: hidden; }
+        .progress-fill { background: #ff79c6; height: 100%; width: 0%; }
+        .time-info { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; }
+        .play-main-btn { font-size: 28px; cursor: pointer; color: white; margin-top: 10px; }
 
+        /* Grid Social Links */
         .grid-container { display: grid; gap: 12px; width: 90%; max-width: 1000px; padding-bottom: 50px; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
+        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; text-align: center; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; }
         .grid-item i { font-size: 22px; margin-bottom: 8px; }
-        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
 
         .sparkle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s forwards; z-index: 999; }
         @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0; transform: scale(3) translateY(10px); } }
-        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center; padding: 20px; }
+        
+        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; text-align: center; padding: 20px; }
     </style>
 </head>
 <body>
 
     <div id="play-overlay">CHẠM ĐỂ KHÁM PHÁ THẾ GIỚI CỦA TƯỜNG</div>
     
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/hinh%20nen.mp4" type="video/mp4">
+    <video id="bg-video" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5">
+        <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/hinh%20nen.mp4" type="video/mp4" muted>
     </video>
     
     <div class="overlay"></div>
@@ -97,10 +93,6 @@
         <i class="fas fa-compact-disc fa-spin" style="color: #ff79c6;"></i>
         <div class="marquee-container">
             <div class="marquee-text" id="m-name">Đang tải...</div>
-        </div>
-        <div class="volume-container">
-            <i class="fas fa-volume-up" style="font-size: 12px;"></i>
-            <input type="range" class="volume-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
         </div>
     </div>
 
@@ -115,9 +107,7 @@
                 <span id="currTime">0:00</span>
                 <span id="totalTime">0:00</span>
             </div>
-            <div class="main-btns">
-                <i id="playBtn" class="fas fa-play play-main-btn"></i>
-            </div>
+            <i id="playBtn" class="fas fa-play play-main-btn"></i>
         </div>
     </div>
 
@@ -125,12 +115,7 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
-        let titleText = "@012tuong ";
-        setInterval(() => {
-            titleText = titleText.substring(1) + titleText.substring(0, 1);
-            document.title = titleText;
-        }, 300);
-
+        // Cấu hình UI
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
@@ -142,30 +127,42 @@
         const audio = document.getElementById('myAudio');
         const video = document.getElementById('bg-video');
         const playBtn = document.getElementById('playBtn');
-        const progressFill = document.getElementById('progressFill');
-        const currTimeTxt = document.getElementById('currTime');
-        const totalTimeTxt = document.getElementById('totalTime');
+        const overlay = document.getElementById('play-overlay');
 
-        document.getElementById('play-overlay').onclick = function() {
-            this.style.display = 'none';
-            // Cố gắng chạy cả video và audio sau khi người dùng chạm vào màn hình
-            video.play();
+        // HÀM ÉP PHÁT CHO SAFARI IPHONE
+        function forceStart() {
+            overlay.style.display = 'none';
+            
+            // Ép video chạy
+            video.muted = true;
+            let videoPromise = video.play();
+            if (videoPromise !== undefined) {
+                videoPromise.catch(error => {
+                    console.log("Safari blocked autoplay, trying again...");
+                    video.muted = true;
+                    video.play();
+                });
+            }
+
+            // Ép audio chạy
             audio.play();
             playBtn.className = "fas fa-pause";
-        };
+        }
 
+        overlay.onclick = forceStart;
+        overlay.ontouchstart = forceStart; // Thêm chạm tay cho iPhone
+
+        // Điều khiển nhạc
         playBtn.onclick = () => {
             if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause"; }
             else { audio.pause(); playBtn.className = "fas fa-play"; }
         };
 
-        document.getElementById('volumeControl').oninput = (e) => { audio.volume = e.target.value; };
-
         audio.ontimeupdate = () => {
             const pct = (audio.currentTime / audio.duration) * 100;
-            progressFill.style.width = pct + "%";
-            currTimeTxt.innerText = formatTime(audio.currentTime);
-            if (!isNaN(audio.duration)) totalTimeTxt.innerText = formatTime(audio.duration);
+            document.getElementById('progressFill').style.width = pct + "%";
+            document.getElementById('currTime').innerText = formatTime(audio.currentTime);
+            if (!isNaN(audio.duration)) document.getElementById('totalTime').innerText = formatTime(audio.duration);
         };
 
         function formatTime(sec) {
@@ -173,11 +170,7 @@
             return m + ":" + (s < 10 ? "0" + s : s);
         }
 
-        document.getElementById('progressArea').onclick = (e) => {
-            const width = e.currentTarget.clientWidth;
-            audio.currentTime = (e.offsetX / width) * audio.duration;
-        };
-
+        // Sparkle hiệu ứng chạm
         document.addEventListener('touchstart', (e) => {
             let touch = e.touches[0];
             let s = document.createElement('div'); s.className = 'sparkle';
