@@ -41,14 +41,13 @@
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        /* BOX NHẠC GỌN LẠI */
         .music-top-left, .view-counter-top-right { 
             position: fixed; top: 15px; z-index: 100; 
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
             padding: 8px 15px; border-radius: 30px; display: flex; align-items: center; 
             backdrop-filter: blur(15px); height: 35px; box-sizing: border-box;
         }
-        .music-top-left { left: 15px; width: 180px; gap: 8px; } /* Đã thu ngắn chiều rộng */
+        .music-top-left { left: 15px; width: 180px; gap: 8px; }
         .view-counter-top-right { right: 15px; gap: 8px; font-size: 13px; font-weight: bold; }
 
         .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
@@ -63,46 +62,19 @@
         .header { text-align: center; margin-top: 80px; margin-bottom: 30px; z-index: 1; position: relative; }
         .avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.2); margin-bottom: 10px; }
         
-        /* TÊN VÀ TÍCH XANH */
         .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         #user-name { margin: 0; font-size: 32px; font-weight: 700; color: #fff; text-shadow: 0 0 10px #ff79c6; }
         .verified-tick { color: #1877f2; font-size: 24px; }
 
-        /* PHẦN PLAYER CĂN HÀNG NGANG TUYỆT ĐỐI */
         .player-controls { 
-            width: 340px; 
-            margin: 0 auto; 
-            display: flex; 
-            align-items: center; /* Căn tất cả các thành phần theo hàng ngang giữa */
-            gap: 12px; 
-            background: rgba(0,0,0,0.2);
-            padding: 10px 15px;
-            border-radius: 20px;
+            width: 340px; margin: 0 auto; display: flex; 
+            align-items: center; gap: 12px; background: rgba(0,0,0,0.2);
+            padding: 10px 15px; border-radius: 20px;
         }
-        .play-main-btn { 
-            font-size: 20px; /* Thu nhỏ nút play */
-            cursor: pointer; 
-            color: #ff79c6; 
-            min-width: 25px;
-        }
-        .progress-bar-container { 
-            flex-grow: 1; 
-            background: rgba(255,255,255,0.2); 
-            height: 6px; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            position: relative;
-        }
+        .play-main-btn { font-size: 20px; cursor: pointer; color: #ff79c6; min-width: 25px; }
+        .progress-bar-container { flex-grow: 1; background: rgba(255,255,255,0.2); height: 6px; border-radius: 10px; cursor: pointer; position: relative; }
         .progress-fill { background: #ff79c6; height: 100%; width: 0%; border-radius: 10px; box-shadow: 0 0 8px #ff79c6; }
-        .time-info { 
-            display: flex; 
-            gap: 5px; 
-            font-size: 10px; 
-            font-weight: bold; 
-            min-width: 65px; 
-            justify-content: flex-end;
-            opacity: 0.8;
-        }
+        .time-info { display: flex; gap: 5px; font-size: 10px; font-weight: bold; min-width: 65px; justify-content: flex-end; opacity: 0.8; }
 
         .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; z-index: 1; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
@@ -111,9 +83,15 @@
         .grid-item i { font-size: 25px; margin-bottom: 10px; }
         .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
 
-        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center; }
+        /* SỬA LỖI LỚP PHỦ */
+        #play-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
 
-        /* MODAL */
         #qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .qr-content { background: #1a1a1a; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 85%; }
         .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
@@ -121,7 +99,6 @@
         .qr-content .owner-name { margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px; }
         .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
 
-        /* SPARKLE */
         .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; background-color: #ff79c6; box-shadow: 0 0 10px #ff79c6; pointer-events: none; z-index: 99999; animation: sparkleAnim 1s linear forwards; }
         @keyframes sparkleAnim { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0) translateY(50px); opacity: 0; } }
     </style>
@@ -191,7 +168,6 @@
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
-        // BỘ ĐẾM LƯỢT XEM
         function handleViewCounter() {
             let views = localStorage.getItem('bio_view_count');
             if (!views) views = 1000;
@@ -201,7 +177,6 @@
         }
         handleViewCounter();
 
-        // KIM TUYẾN CHUỘT
         document.addEventListener('mousemove', function(e) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -213,9 +188,9 @@
             setTimeout(() => sparkle.remove(), 1000);
         });
 
-        // KIM TUYẾN QUANH CHỮ TƯỜNG
         setInterval(() => {
             const nameEl = document.getElementById('user-name');
+            if(!nameEl) return;
             const rect = nameEl.getBoundingClientRect();
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -254,14 +229,28 @@
         const overlay = document.getElementById('play-overlay');
 
         function startEverything() {
-            overlay.style.display = 'none';
+            // Chống bấm xuyên: vô hiệu hóa tương tác tạm thời
+            document.body.style.pointerEvents = "none";
+            
+            overlay.style.opacity = '0';
+            overlay.style.visibility = 'hidden';
+            
             video.play().catch(() => { video.muted = true; video.play(); });
             audio.play();
             playBtn.className = "fas fa-pause play-main-btn";
+
+            // Sau khi lớp phủ ẩn hẳn (500ms), cho phép tương tác lại
+            setTimeout(() => {
+                document.body.style.pointerEvents = "auto";
+                overlay.style.display = 'none';
+            }, 500);
         }
 
         overlay.onclick = startEverything;
-        overlay.ontouchstart = startEverything;
+        overlay.ontouchstart = (e) => {
+            e.preventDefault(); // Chống double tap hoặc click ảo trên mobile
+            startEverything();
+        };
 
         playBtn.onclick = () => {
             if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause play-main-btn"; }
