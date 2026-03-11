@@ -31,17 +31,25 @@
     <style>
         body { margin: 0; padding: 0; background: #050505; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important; }
         
-        /* VIDEO NỀN CHUẨN */
-        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+        /* TỐI ƯU VIDEO NỀN CHO DI ĐỘNG */
+        #bg-video { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            z-index: -2;
+            background-color: #000; /* Hiển thị nền đen trong lúc tải */
+        }
         
-        /* LỚP PHỦ TRONG SUỐT ĐỂ VIDEO HIỆN RÕ */
         .overlay { 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: rgba(0,0,0,0.2); 
+            background: rgba(0,0,0,0.3); 
             z-index: -1; 
         }
         
@@ -53,9 +61,9 @@
         .volume-slider { width: 0; opacity: 0; transition: 0.3s; height: 4px; cursor: pointer; accent-color: white; }
         .volume-container:hover .volume-slider { width: 50px; opacity: 1; }
 
-        .header { text-align: center; margin-top: 100px; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-        .player-controls { width: 280px; margin-top: 15px; }
+        .header { text-align: center; margin-top: 80px; margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; margin-bottom: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .player-controls { width: 260px; margin-top: 10px; }
         .progress-bar-container { background: rgba(255,255,255,0.2); height: 5px; border-radius: 10px; margin: 8px 0; position: relative; overflow: hidden; cursor: pointer; }
         .progress-fill { background: #ff79c6; height: 100%; width: 0%; box-shadow: 0 0 10px #ff79c6; transition: width 0.1s linear; }
         .time-info { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: bold; }
@@ -63,21 +71,21 @@
         .play-main-btn { font-size: 28px; cursor: pointer; transition: 0.3s; color: white; }
         .play-main-btn:hover { transform: scale(1.1); color: #ff79c6; }
 
-        .grid-container { display: grid; gap: 15px; width: 90%; max-width: 1000px; padding-bottom: 50px; }
+        .grid-container { display: grid; gap: 12px; width: 90%; max-width: 1000px; padding-bottom: 50px; }
         @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 767px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
-        .grid-item i { font-size: 25px; margin-bottom: 10px; }
-        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
+        .grid-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; text-align: center; text-decoration: none; color: white; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
+        .grid-item i { font-size: 22px; margin-bottom: 8px; }
+        .grid-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: white; }
 
         .sparkle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; pointer-events: none; animation: blink 0.8s forwards; z-index: 999; }
         @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0; transform: scale(3) translateY(10px); } }
-        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; }
+        #play-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center; padding: 20px; }
     </style>
 </head>
 <body>
 
-    <div id="play-overlay">KHÁM PHÁ THẾ GIỚI CỦA TƯỜNG</div>
+    <div id="play-overlay">CHẠM ĐỂ KHÁM PHÁ THẾ GIỚI CỦA TƯỜNG</div>
     
     <video autoplay muted loop playsinline id="bg-video">
         <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/hinh%20nen.mp4" type="video/mp4">
@@ -98,7 +106,7 @@
 
     <div class="header">
         <img id="avatar" src="" class="avatar">
-        <h1 id="user-name" style="margin:0; font-size: 26px;"></h1>
+        <h1 id="user-name" style="margin:0; font-size: 24px;"></h1>
         <div class="player-controls">
             <div class="progress-bar-container" id="progressArea">
                 <div class="progress-fill" id="progressFill"></div>
@@ -132,6 +140,7 @@
         document.getElementById('grid-content').innerHTML = gridContent;
 
         const audio = document.getElementById('myAudio');
+        const video = document.getElementById('bg-video');
         const playBtn = document.getElementById('playBtn');
         const progressFill = document.getElementById('progressFill');
         const currTimeTxt = document.getElementById('currTime');
@@ -139,6 +148,8 @@
 
         document.getElementById('play-overlay').onclick = function() {
             this.style.display = 'none';
+            // Cố gắng chạy cả video và audio sau khi người dùng chạm vào màn hình
+            video.play();
             audio.play();
             playBtn.className = "fas fa-pause";
         };
@@ -167,9 +178,10 @@
             audio.currentTime = (e.offsetX / width) * audio.duration;
         };
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('touchstart', (e) => {
+            let touch = e.touches[0];
             let s = document.createElement('div'); s.className = 'sparkle';
-            s.style.left = e.pageX + 'px'; s.style.top = e.pageY + 'px';
+            s.style.left = touch.pageX + 'px'; s.style.top = touch.pageY + 'px';
             document.body.appendChild(s);
             setTimeout(() => s.remove(), 800);
         });
