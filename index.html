@@ -31,17 +31,17 @@
     <style>
         body { margin: 0; padding: 0; background: #050505; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; cursor: url('https://cur.cursors-4u.net/others/oth-9/oth807.cur'), auto !important; }
         
-        /* VIDEO NỀN NÉT CĂNG */
+        /* VIDEO NỀN CHUẨN */
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         
-        /* LỚP PHỦ TRONG SUỐT (KHÔNG MỜ) */
+        /* LỚP PHỦ TRONG SUỐT ĐỂ VIDEO HIỆN RÕ */
         .overlay { 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: rgba(0,0,0,0.3); /* Chỉ làm tối 30% để nhìn rõ video */
+            background: rgba(0,0,0,0.2); 
             z-index: -1; 
         }
         
@@ -80,7 +80,7 @@
     <div id="play-overlay">KHÁM PHÁ THẾ GIỚI CỦA TƯỜNG</div>
     
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="https://github.com/012tuong/012tuong.github.io/blob/main/hinh%20nen.mp4" type="video/mp4">
+        <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/hinh%20nen.mp4" type="video/mp4">
     </video>
     
     <div class="overlay"></div>
