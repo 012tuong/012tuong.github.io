@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Tường | Luxury </title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="">
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -157,8 +159,9 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
-        // INIT DATA & TAB TITLE RUNNING
+        // INIT DATA, TAB TITLE & ICON
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
+        document.getElementById('favicon').href = CONFIG.anh_dai_dien; // Cập nhật Icon Tab
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
