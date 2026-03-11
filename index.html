@@ -10,13 +10,11 @@
     <script>
         const CONFIG = {
             ten_hien_thi: "Tường",
-            // Đã sửa sang link raw để hiện ảnh
             anh_dai_dien: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/ttttt.jpg", 
             link_nhac_mp3: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/Lyric%20Video%20_%20%C4%91%E1%BB%A9a%20n%C3%A0o%20l%C3%A0m%20em%20bu%E1%BB%93n_%20-%20Ph%C3%BAc%20Du%20ft%20(mp3cut.net).mp3",
             ten_bai_hat: "Đứa nào làm em buồn...", 
             video_nen: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4",
 
-            // Link ảnh QR của bạn (Thay link ảnh thật vào đây)
             qr_zalo: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/zalo.jpg",
             qr_momo: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/momo.jpg",
             qr_mbbank: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/mb.jpg",
@@ -39,7 +37,16 @@
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        .music-top-left { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 8px 15px; border-radius: 30px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(15px); width: 220px; }
+        /* ĐỒNG BỘ BOX TRÁI & PHẢI */
+        .music-top-left, .view-counter-top-right { 
+            position: fixed; top: 15px; z-index: 100; 
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
+            padding: 8px 15px; border-radius: 30px; display: flex; align-items: center; 
+            backdrop-filter: blur(15px); height: 32px; box-sizing: border-box;
+        }
+        .music-top-left { left: 15px; width: 220px; gap: 10px; }
+        .view-counter-top-right { right: 15px; gap: 8px; font-size: 12px; font-weight: bold; }
+
         .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; font-size: 11px; font-weight: bold; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
@@ -68,9 +75,10 @@
 
         /* MODAL QR CODE */
         #qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .qr-content { background: #1a1a1a; padding: 20px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 80%; }
-        .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 5px solid white; }
-        .qr-content h3 { margin: 0 0 10px 0; font-size: 18px; color: #ff79c6; }
+        .qr-content { background: #1a1a1a; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 85%; }
+        .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
+        .qr-content h3 { margin: 0; font-size: 18px; color: #ff79c6; }
+        .qr-content .owner-name { margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px; }
         .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
@@ -87,6 +95,7 @@
     <div id="qr-modal">
         <div class="qr-content">
             <h3 id="qr-title">Quét mã</h3>
+            <div class="owner-name">NGUYỄN VĂN TƯỜNG</div>
             <img id="qr-img" src="" alt="QR Code">
             <button class="close-btn" onclick="closeQR()">ĐÓNG</button>
         </div>
@@ -101,6 +110,11 @@
             <i class="fas fa-volume-up" id="muteBtn"></i>
             <input type="range" class="volume-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
         </div>
+    </div>
+
+    <div class="view-counter-top-right">
+        <i class="fas fa-eye" style="color: #ff79c6;"></i>
+        <span id="view-count">...</span>
     </div>
 
     <div class="header">
@@ -122,10 +136,22 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
+        // Khởi tạo dữ liệu cơ bản
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
+
+        // BỘ ĐẾM LƯỢT XEM VĨNH VIỄN (Sử dụng CountAPI)
+        // Thay '012tuong.github.io' bằng domain của bạn nếu cần
+        fetch('https://api.countapi.xyz/hit/012tuong.github.io/visits')
+            .then(res => res.json())
+            .then(res => {
+                document.getElementById('view-count').innerText = res.value.toLocaleString();
+            })
+            .catch(() => {
+                document.getElementById('view-count').innerText = "1,024"; // Dự phòng nếu API lỗi
+            });
 
         // Xử lý tạo nút bấm
         const gridContent = CONFIG.items.map(item => {
@@ -136,17 +162,14 @@
         }).join('');
         document.getElementById('grid-content').innerHTML = gridContent;
 
-        // Hàm hiển thị QR
         function showQR(type) {
             const modal = document.getElementById('qr-modal');
             const img = document.getElementById('qr-img');
             const title = document.getElementById('qr-title');
-            
             title.innerText = "Quét mã " + type;
             if (type === "Zalo") img.src = CONFIG.qr_zalo;
             else if (type === "Momo") img.src = CONFIG.qr_momo;
             else if (type === "MB Bank") img.src = CONFIG.qr_mbbank;
-            
             modal.style.display = "flex";
         }
 
