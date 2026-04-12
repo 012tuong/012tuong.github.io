@@ -230,7 +230,7 @@
         typeEffect();
 
         function handleViewCounter() {
-            let views = localStorage.getItem('bio_view_count') || 1000;
+            let views = localStorage.getItem('bio_view_count') || 1000000;
             views = parseInt(views) + 1;
             localStorage.setItem('bio_view_count', views);
             document.getElementById('view-count').innerText = views.toLocaleString();
