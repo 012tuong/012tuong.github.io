@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>@Tường | Luxury</title>
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/ttttt.jpg">
     
@@ -37,7 +37,7 @@
         html, body { cursor: url('https://cur.cursors-4u.net/anime/ani-11/ani1097.cur'), auto !important; }
         a, button, .grid-item, #playBtn, .progress-bar-container { cursor: url('https://cur.cursors-4u.net/anime/ani-11/ani1097.cur'), pointer !important; }
 
-        body { margin: 0; padding: 0; background: #000; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        body { margin: 0; padding: 0; background: #000; color: white; font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
@@ -140,6 +140,20 @@
         .guest-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #333; font-size: 13px; }
         .guest-name { color: #ff79c6; font-weight: bold; }
         .guest-time { font-size: 10px; opacity: 0.5; }
+
+        /* CẬP NHẬT: Ô nhập liệu kích thước 16px để chặn auto zoom trên mobile */
+        #usernameInput {
+            padding: 12px 20px; 
+            border-radius: 25px; 
+            border: 2px solid #ff79c6; 
+            background: rgba(0,0,0,0.5); 
+            color: white; 
+            outline: none; 
+            text-align: center; 
+            width: 220px; 
+            font-family: 'Montserrat';
+            font-size: 16px; 
+        }
     </style>
 </head>
 <body>
@@ -149,9 +163,7 @@
             <div style="font-size:20px; margin-bottom:20px; color: #ff79c6; text-shadow: 0 0 10px #ff79c6;">
                 MỞ THẾ GIỚI CỦA TƯỜNG
             </div>
-
-            <input id="usernameInput" placeholder="Nhập tên của bạn rồi Enter..."
-                style="padding:12px 20px; border-radius:25px; border: 2px solid #ff79c6; background: rgba(0,0,0,0.5); color: white; outline:none; text-align:center; width:220px; font-family: 'Montserrat';">
+            <input id="usernameInput" placeholder="Nhập tên của bạn rồi Enter...">
         </div>
     </div>
     
@@ -274,11 +286,9 @@
         const muteBtn = document.getElementById('muteBtn');
         const usernameInput = document.getElementById("usernameInput");
 
-        // TỰ ĐỘNG VÀO NẾU ĐÃ NHẬP TÊN TRƯỚC ĐÓ
         window.addEventListener('load', () => {
             const savedName = localStorage.getItem("visitor_identity");
             if (savedName) {
-                // Vào thẳng không cần nhập lại
                 overlay.style.display = 'none';
                 video.play().catch(() => { video.muted = true; video.play(); });
                 audio.play();
@@ -295,13 +305,11 @@
 
         function startEverything() {
             const name = usernameInput.value.trim();
-            if (name.length < 2) { alert("Tên ngắn quá Baby Ạ!"); return; }
-            if (name.length > 20) { alert("Tên dài Kỳ lắm nè!"); return; }
+            if (name.length < 2) { alert("Tên ngắn quá Tường ơi!"); return; }
+            if (name.length > 20) { alert("Tên dài quá rồi nè!"); return; }
 
-            // Lưu danh tính để lần sau vào thẳng
             localStorage.setItem("visitor_identity", name);
 
-            // Ghi vào Firebase (Chống spam ghi danh liên tục)
             const lastLogTime = localStorage.getItem("last_log_time");
             const now = Date.now();
             if (!lastLogTime || (now - lastLogTime > 300000)) {
@@ -383,7 +391,7 @@ window.showVisitorMenu = async function() {
     const ownerName = document.getElementById('qr-owner-name');
     const guestArea = document.getElementById('guest-list-area');
 
-    title.innerText = "Trai Xinh Gái Đẹp ✨";
+    title.innerText = "GUESTBOOK ✨";
     ownerName.style.display = "none";
     img.style.display = "none";
     guestArea.style.display = "block";
