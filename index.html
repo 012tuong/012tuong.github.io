@@ -229,14 +229,6 @@
         }
         typeEffect();
 
-        function handleViewCounter() {
-            let views = localStorage.getItem('bio_view_count') || 1000000;
-            views = parseInt(views) + 1;
-            localStorage.setItem('bio_view_count', views);
-            document.getElementById('view-count').innerText = views.toLocaleString();
-        }
-        handleViewCounter();
-
         document.addEventListener('mousemove', function(e) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -322,5 +314,51 @@
             scrub(e);
         }, {passive: false});
     </script>
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "DÁN_API_KEY",
+  authDomain: "DÁN_AUTHDOMAIN",
+  projectId: "DÁN_PROJECT_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function handleViewCounter() {
+  const now = Date.now();
+  const lastView = localStorage.getItem("last_view_time");
+  const ONE_DAY = 24 * 60 * 60 * 1000;
+
+  const ref = doc(db, "views", "counter");
+  const snap = await getDoc(ref);
+
+  // nếu đã xem trong 24h
+  if (lastView && (now - lastView < ONE_DAY)) {
+    if (snap.exists()) {
+      document.getElementById("view-count").innerText =
+        snap.data().count.toLocaleString();
+    }
+    return;
+  }
+
+  if (!snap.exists()) {
+    await setDoc(ref, { count: 1 });
+    document.getElementById("view-count").innerText = "1";
+  } else {
+    const newCount = snap.data().count + 1;
+    await updateDoc(ref, { count: newCount });
+    document.getElementById("view-count").innerText =
+      newCount.toLocaleString();
+  }
+
+  localStorage.setItem("last_view_time", now);
+}
+
+handleViewCounter();
+</script>
+
 </body>
 </html>
