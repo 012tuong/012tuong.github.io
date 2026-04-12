@@ -144,7 +144,28 @@
 </head>
 <body>
 
-    <div id="play-overlay">MỞ THẾ GIỚI CỦA TƯỜNG</div>
+    <div id="play-overlay">
+    <div style="text-align:center">
+        <div style="font-size:20px; margin-bottom:15px;">
+            MỞ THẾ GIỚI CỦA TƯỜNG
+        </div>
+
+        <!-- 👤 Nhập tên -->
+        <input id="usernameInput" placeholder="Nhập tên của bạn..."
+            style="padding:10px 15px; border-radius:20px; border:none; outline:none; text-align:center; margin-bottom:10px; width:200px;">
+
+        <br>
+
+        <!-- 👁️ View -->
+        <div style="margin-top:10px; font-size:14px;">
+            Lượt truy cập: <span id="view-count-overlay">...</span>
+        </div>
+
+        <div style="margin-top:15px; font-size:12px; opacity:0.7;">
+            (Click để vào)
+        </div>
+    </div>
+</div>
     
     <video id="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4">
@@ -265,13 +286,17 @@
         const volSlider = document.getElementById('volumeControl');
         const muteBtn = document.getElementById('muteBtn');
 
-        function startEverything() {
-            overlay.style.opacity = '0';
-            setTimeout(() => { overlay.style.display = 'none'; }, 500);
-            video.play().catch(() => { video.muted = true; video.play(); });
-            audio.play();
-            playBtn.className = "fas fa-pause play-main-btn";
-        }
+function startEverything() {
+    const name = document.getElementById("usernameInput").value || "Khách";
+    localStorage.setItem("username", name);
+
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 500);
+
+    video.play().catch(() => { video.muted = true; video.play(); });
+    audio.play();
+    playBtn.className = "fas fa-pause play-main-btn";
+}
 
         overlay.onclick = startEverything;
 
@@ -323,10 +348,6 @@ const firebaseConfig = {
   apiKey: "AIzaSyD8yhKBVhd99r1Nn-90N3pkj5VM56FYEmk",
   authDomain: "tuong-66302.firebaseapp.com",
   projectId: "tuong-66302",
-  storageBucket: "tuong-66302.firebasestorage.app",
-  messagingSenderId: "89275570681",
-  appId: "1:89275570681:web:294296bfb0b756a7828528",
-  measurementId: "G-172SXTRYRE"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -340,11 +361,11 @@ async function handleViewCounter() {
   const ref = doc(db, "views", "counter");
   const snap = await getDoc(ref);
 
-  // nếu đã xem trong 24h
   if (lastView && (now - lastView < ONE_DAY)) {
     if (snap.exists()) {
-      document.getElementById("view-count").innerText =
-        snap.data().count.toLocaleString();
+      const count = snap.data().count.toLocaleString();
+      document.getElementById("view-count").innerText = count;
+      document.getElementById("view-count-overlay").innerText = count;
     }
     return;
   }
@@ -352,11 +373,14 @@ async function handleViewCounter() {
   if (!snap.exists()) {
     await setDoc(ref, { count: 1 });
     document.getElementById("view-count").innerText = "1";
+    document.getElementById("view-count-overlay").innerText = "1";
   } else {
     const newCount = snap.data().count + 1;
     await updateDoc(ref, { count: newCount });
-    document.getElementById("view-count").innerText =
-      newCount.toLocaleString();
+
+    const count = newCount.toLocaleString();
+    document.getElementById("view-count").innerText = count;
+    document.getElementById("view-count-overlay").innerText = count;
   }
 
   localStorage.setItem("last_view_time", now);
