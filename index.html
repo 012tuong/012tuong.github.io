@@ -137,7 +137,6 @@
         .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; background-color: #ff79c6; box-shadow: 0 0 10px #ff79c6; pointer-events: none; z-index: 99999; animation: sparkleAnim 1s linear forwards; }
         @keyframes sparkleAnim { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0) translateY(50px); opacity: 0; } }
         
-        /* GUEST LIST STYLE */
         .guest-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #333; font-size: 13px; }
         .guest-name { color: #ff79c6; font-weight: bold; }
         .guest-time { font-size: 10px; opacity: 0.5; }
@@ -153,8 +152,7 @@
 
             <input id="usernameInput" placeholder="Nhập tên của bạn rồi Enter..."
                 style="padding:12px 20px; border-radius:25px; border: 2px solid #ff79c6; background: rgba(0,0,0,0.5); color: white; outline:none; text-align:center; width:220px; font-family: 'Montserrat';">
-            
-            </div>
+        </div>
     </div>
     
     <video id="bg-video" muted loop playsinline preload="auto">
@@ -276,6 +274,18 @@
         const muteBtn = document.getElementById('muteBtn');
         const usernameInput = document.getElementById("usernameInput");
 
+        // TỰ ĐỘNG VÀO NẾU ĐÃ NHẬP TÊN TRƯỚC ĐÓ
+        window.addEventListener('load', () => {
+            const savedName = localStorage.getItem("visitor_identity");
+            if (savedName) {
+                // Vào thẳng không cần nhập lại
+                overlay.style.display = 'none';
+                video.play().catch(() => { video.muted = true; video.play(); });
+                audio.play();
+                playBtn.className = "fas fa-pause play-main-btn";
+            }
+        });
+
         usernameInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 e.preventDefault();
@@ -285,11 +295,19 @@
 
         function startEverything() {
             const name = usernameInput.value.trim();
-            if (name.length < 2) { alert("Tên ngắn quá Tường ơi, nhập ít nhất 2 chữ nhé!"); return; }
-            if (name.length > 20) { alert("Tên dài quá rồi nè!"); return; }
+            if (name.length < 2) { alert("Tên ngắn quá Baby Ạ!"); return; }
+            if (name.length > 20) { alert("Tên dài Kỳ lắm nè!"); return; }
 
-            localStorage.setItem("username", name);
-            window.logVisitor(name); 
+            // Lưu danh tính để lần sau vào thẳng
+            localStorage.setItem("visitor_identity", name);
+
+            // Ghi vào Firebase (Chống spam ghi danh liên tục)
+            const lastLogTime = localStorage.getItem("last_log_time");
+            const now = Date.now();
+            if (!lastLogTime || (now - lastLogTime > 300000)) {
+                window.logVisitor(name); 
+                localStorage.setItem("last_log_time", now);
+            }
 
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.style.display = 'none'; }, 500);
@@ -350,15 +368,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.logVisitor = async function(name) {
-    const lastLogged = localStorage.getItem("last_logged_name");
-    if(lastLogged === name) return; 
-
     try {
         await addDoc(collection(db, "visitors"), {
             name: name,
             time: Date.now()
         });
-        localStorage.setItem("last_logged_name", name);
     } catch (e) { console.error(e); }
 }
 
@@ -398,14 +412,12 @@ async function handleViewCounter() {
   const ref = doc(db, "views", "counter");
   const snap = await getDoc(ref);
   if (snap.exists()) {
-      const count = snap.data().count.toLocaleString();
-      document.getElementById("view-count").innerText = count;
-      // Vẫn đếm view nhưng không hiện ở overlay nữa
+      document.getElementById("view-count").innerText = snap.data().count.toLocaleString();
   }
   
   const now = Date.now();
   const lastView = localStorage.getItem("last_view_time");
-  if (!lastView || (now - lastView > 24 * 60 * 60 * 1000)) {
+  if (!lastView || (now - lastView > 86400000)) {
       if (!snap.exists()) await setDoc(ref, { count: 1 });
       else await updateDoc(ref, { count: snap.data().count + 1 });
       localStorage.setItem("last_view_time", now);
