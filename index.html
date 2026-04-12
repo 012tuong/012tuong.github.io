@@ -16,11 +16,9 @@
             link_nhac_mp3: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/Iu%20La%20Day.mp3",
             ten_bai_hat: "Iu Là Đây...", 
             video_nen: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4",
-
             qr_zalo: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/zalo.jpg",
             qr_momo: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/momo.jpg",
             qr_mbbank: "https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/mb.jpg",
-
             items: [
                 { ten: "Facebook", icon: "fab fa-facebook", url: "https://www.facebook.com/wall.2k4", mau: "#1877f2" },
                 { ten: "TikTok", icon: "fab fa-tiktok", url: "https://www.tiktok.com/@wall.2k4", mau: "#ffffff" },
@@ -43,7 +41,6 @@
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; background-color: #000; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
         
-        /* HIỆU ỨNG TÊN GRADIENT LẤP LÁNH */
         .sparkle-name {
             background: linear-gradient(90deg, #ff79c6, #bd93f9, #ff79c6);
             background-size: 200% auto;
@@ -58,7 +55,6 @@
             to { text-shadow: 0 0 15px rgba(189, 147, 249, 0.7), 0 0 8px rgba(255, 121, 198, 0.5); }
         }
 
-        /* BOX NHẠC GÓC TRÁI */
         .music-top-left, .view-counter-top-right { 
             position: fixed; top: 15px; z-index: 100; 
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -66,7 +62,8 @@
             backdrop-filter: blur(15px); height: 32px; box-sizing: border-box;
         }
         .music-top-left { left: 15px; width: 120px; gap: 6px; }
-        .view-counter-top-right { right: 15px; gap: 8px; font-size: 12px; font-weight: bold; }
+        .view-counter-top-right { right: 15px; gap: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .view-counter-top-right:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
 
         .marquee-container { flex-grow: 1; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 8s linear infinite; font-size: 9px; font-weight: bold; }
@@ -110,7 +107,6 @@
             content: ""; position: absolute; right: -6px; top: 50%;
             transform: translateY(-50%); width: 12px; height: 12px;
             background: #fff; border-radius: 50%; box-shadow: 0 0 8px #ff79c6;
-            transition: transform 0.2s;
         }
 
         .time-info { 
@@ -129,45 +125,42 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.95); z-index: 9999; 
             display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; font-weight: bold; letter-spacing: 2px; text-align: center;
+            font-weight: bold; letter-spacing: 2px; text-align: center;
         }
 
         #qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .qr-content { background: #1a1a1a; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 300px; width: 85%; }
+        .qr-content { background: #1a1a1a; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #333; max-width: 320px; width: 85%; }
         .qr-content img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
         .qr-content h3 { margin: 0; font-size: 18px; color: #ff79c6; }
-        .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .close-btn { background: #ff79c6; border: none; color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; }
 
         .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; background-color: #ff79c6; box-shadow: 0 0 10px #ff79c6; pointer-events: none; z-index: 99999; animation: sparkleAnim 1s linear forwards; }
         @keyframes sparkleAnim { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0) translateY(50px); opacity: 0; } }
+        
+        /* GUEST LIST STYLE */
+        .guest-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #333; font-size: 13px; }
+        .guest-name { color: #ff79c6; font-weight: bold; }
+        .guest-time { font-size: 10px; opacity: 0.5; }
     </style>
 </head>
 <body>
 
     <div id="play-overlay">
-    <div style="text-align:center">
-        <div style="font-size:20px; margin-bottom:15px;">
-            MỞ THẾ GIỚI CỦA TƯỜNG
-        </div>
+        <div style="text-align:center">
+            <div style="font-size:20px; margin-bottom:15px; color: #ff79c6; text-shadow: 0 0 10px #ff79c6;">
+                MỞ THẾ GIỚI CỦA TƯỜNG
+            </div>
 
-        <!-- 👤 Nhập tên -->
-        <input id="usernameInput" placeholder="Nhập tên của bạn..."
-            style="padding:10px 15px; border-radius:20px; border:none; outline:none; text-align:center; margin-bottom:10px; width:200px;">
+            <input id="usernameInput" placeholder="Nhập tên của bạn rồi Enter..."
+                style="padding:12px 20px; border-radius:25px; border: 2px solid #ff79c6; background: rgba(0,0,0,0.5); color: white; outline:none; text-align:center; margin-bottom:10px; width:220px; font-family: 'Montserrat';">
 
-        <br>
-
-        <!-- 👁️ View -->
-        <div style="margin-top:10px; font-size:14px;">
-            Lượt truy cập: <span id="view-count-overlay">...</span>
-        </div>
-
-        <div style="margin-top:15px; font-size:12px; opacity:0.7;">
-            (Click để vào)
+            <div style="margin-top:15px; font-size:14px; opacity: 0.8;">
+                Lượt truy cập: <span id="view-count-overlay" style="color: #bd93f9;">...</span>
+            </div>
         </div>
     </div>
-</div>
     
-    <video id="bg-video" autoplay muted loop playsinline preload="auto">
+    <video id="bg-video" muted loop playsinline preload="auto">
         <source src="https://raw.githubusercontent.com/012tuong/012tuong.github.io/main/202603110751.mp4">
     </video>
     
@@ -176,8 +169,9 @@
     <div id="qr-modal">
         <div class="qr-content">
             <h3 id="qr-title">Quét mã</h3>
-            <div style="margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px;">NGUYỄN VĂN TƯỜNG</div>
+            <div id="qr-owner-name" style="margin: 5px 0 15px 0; font-size: 14px; font-weight: bold; color: #fff; letter-spacing: 1px;">NGUYỄN VĂN TƯỜNG</div>
             <img id="qr-img" src="" alt="QR Code">
+            <div id="guest-list-area" style="max-height: 250px; overflow-y: auto;"></div>
             <button class="close-btn" onclick="closeQR()">ĐÓNG</button>
         </div>
     </div>
@@ -193,7 +187,7 @@
         </div>
     </div>
 
-    <div class="view-counter-top-right">
+    <div class="view-counter-top-right" onclick="showVisitorMenu()">
         <i class="fas fa-eye" style="color: #ff79c6;"></i>
         <span id="view-count">...</span>
     </div>
@@ -222,13 +216,11 @@
     <audio id="myAudio" loop><source id="audioSrc" src="" type="audio/mpeg"></audio>
 
     <script>
-        // Cấu hình ban đầu
         document.getElementById('avatar').src = CONFIG.anh_dai_dien;
         document.getElementById('user-name').innerText = CONFIG.ten_hien_thi;
         document.getElementById('m-name').innerText = CONFIG.ten_bai_hat;
         document.getElementById('audioSrc').src = CONFIG.link_nhac_mp3;
 
-        // HIỆU ỨNG TYPEWRITER CHO TITLE TRÌNH DUYỆT
         const titleText = "@Tường";
         let charIndex = 0;
         let isDeleting = false;
@@ -236,21 +228,13 @@
         function typeEffect() {
             const currentTitle = titleText.substring(0, charIndex);
             document.title = currentTitle + (isDeleting ? "" : "|");
-
-            if (!isDeleting && charIndex < titleText.length) {
-                charIndex++;
-                setTimeout(typeEffect, 400); 
-            } else if (isDeleting && charIndex > 0) {
-                charIndex--;
-                setTimeout(typeEffect, 200); 
-            } else {
-                isDeleting = !isDeleting;
-                setTimeout(typeEffect, isDeleting ? 2000 : 500);
-            }
+            if (!isDeleting && charIndex < titleText.length) { charIndex++; setTimeout(typeEffect, 400); } 
+            else if (isDeleting && charIndex > 0) { charIndex--; setTimeout(typeEffect, 200); } 
+            else { isDeleting = !isDeleting; setTimeout(typeEffect, isDeleting ? 2000 : 500); }
         }
         typeEffect();
 
-        document.addEventListener('mousemove', function(e) {
+        document.addEventListener('mousemove', (e) => {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             sparkle.style.left = e.pageX + 'px';
@@ -271,12 +255,20 @@
             const modal = document.getElementById('qr-modal');
             const img = document.getElementById('qr-img');
             const title = document.getElementById('qr-title');
+            const guestArea = document.getElementById('guest-list-area');
+            const ownerName = document.getElementById('qr-owner-name');
+
+            ownerName.style.display = "block";
+            guestArea.style.display = "none";
+            img.style.display = "block";
+            
             title.innerText = "Quét mã " + type;
             if (type === "Zalo") img.src = CONFIG.qr_zalo;
             else if (type === "Momo") img.src = CONFIG.qr_momo;
             else if (type === "MB Bank") img.src = CONFIG.qr_mbbank;
             modal.style.display = "flex";
         }
+        
         function closeQR() { document.getElementById('qr-modal').style.display = "none"; }
 
         const audio = document.getElementById('myAudio');
@@ -285,20 +277,31 @@
         const overlay = document.getElementById('play-overlay');
         const volSlider = document.getElementById('volumeControl');
         const muteBtn = document.getElementById('muteBtn');
+        const usernameInput = document.getElementById("usernameInput");
 
-function startEverything() {
-    const name = document.getElementById("usernameInput").value || "Khách";
-    localStorage.setItem("username", name);
+        // CHỐNG SPAM & ENTER ĐỂ VÀO
+        usernameInput.addEventListener("keypress", (e) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                startEverything();
+            }
+        });
 
-    overlay.style.opacity = '0';
-    setTimeout(() => { overlay.style.display = 'none'; }, 500);
+        function startEverything() {
+            const name = usernameInput.value.trim();
+            if (name.length < 2) { alert("Tên ngắn quá Tường ơi, nhập ít nhất 2 chữ nhé!"); return; }
+            if (name.length > 20) { alert("Tên dài quá rồi nè!"); return; }
 
-    video.play().catch(() => { video.muted = true; video.play(); });
-    audio.play();
-    playBtn.className = "fas fa-pause play-main-btn";
-}
+            localStorage.setItem("username", name);
+            window.logVisitor(name); // Gọi hàm lưu Firebase từ script module
 
-        overlay.onclick = startEverything;
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+
+            video.play().catch(() => { video.muted = true; video.play(); });
+            audio.play();
+            playBtn.className = "fas fa-pause play-main-btn";
+        }
 
         playBtn.onclick = () => {
             if (audio.paused) { audio.play(); playBtn.className = "fas fa-pause play-main-btn"; }
@@ -334,15 +337,12 @@ function startEverything() {
             audio.currentTime = (clickX / width) * audio.duration;
         }
         progressArea.onclick = scrub;
-        progressArea.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            scrub(e);
-        }, {passive: false});
+        progressArea.addEventListener('touchmove', (e) => { e.preventDefault(); scrub(e); }, {passive: false});
     </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8yhKBVhd99r1Nn-90N3pkj5VM56FYEmk",
@@ -352,6 +352,53 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// LƯU TÊN USER VÀO FIREBASE
+window.logVisitor = async function(name) {
+    const lastLogged = localStorage.getItem("last_logged_name");
+    if(lastLogged === name) return; // Chống spam trùng tên liên tục
+
+    try {
+        await addDoc(collection(db, "visitors"), {
+            name: name,
+            time: Date.now()
+        });
+        localStorage.setItem("last_logged_name", name);
+    } catch (e) { console.error(e); }
+}
+
+// HIỆN MENU LƯU BÚT CUTE
+window.showVisitorMenu = async function() {
+    const modal = document.getElementById('qr-modal');
+    const title = document.getElementById('qr-title');
+    const img = document.getElementById('qr-img');
+    const ownerName = document.getElementById('qr-owner-name');
+    const guestArea = document.getElementById('guest-list-area');
+
+    title.innerText = "GUESTBOOK ✨";
+    ownerName.style.display = "none";
+    img.style.display = "none";
+    guestArea.style.display = "block";
+    guestArea.innerHTML = "<div style='padding:20px;'>Đang tải danh sách...</div>";
+    
+    modal.style.display = "flex";
+
+    try {
+        const q = query(collection(db, "visitors"), orderBy("time", "desc"), limit(15));
+        const snap = await getDocs(q);
+        let html = "";
+        snap.forEach((doc) => {
+            const d = doc.data();
+            const timeStr = new Date(d.time).toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
+            html += `
+                <div class="guest-item">
+                    <span class="guest-name">🌸 ${d.name}</span>
+                    <span class="guest-time">${timeStr}</span>
+                </div>`;
+        });
+        guestArea.innerHTML = html || "<div style='padding:20px;'>Chưa có ai ghé thăm...</div>";
+    } catch (e) { guestArea.innerHTML = "Lỗi tải dữ liệu!"; }
+}
 
 async function handleViewCounter() {
   const now = Date.now();
@@ -377,12 +424,10 @@ async function handleViewCounter() {
   } else {
     const newCount = snap.data().count + 1;
     await updateDoc(ref, { count: newCount });
-
     const count = newCount.toLocaleString();
     document.getElementById("view-count").innerText = count;
     document.getElementById("view-count-overlay").innerText = count;
   }
-
   localStorage.setItem("last_view_time", now);
 }
 
