@@ -147,17 +147,14 @@
 
     <div id="play-overlay">
         <div style="text-align:center">
-            <div style="font-size:20px; margin-bottom:15px; color: #ff79c6; text-shadow: 0 0 10px #ff79c6;">
+            <div style="font-size:20px; margin-bottom:20px; color: #ff79c6; text-shadow: 0 0 10px #ff79c6;">
                 MỞ THẾ GIỚI CỦA TƯỜNG
             </div>
 
             <input id="usernameInput" placeholder="Nhập tên của bạn rồi Enter..."
-                style="padding:12px 20px; border-radius:25px; border: 2px solid #ff79c6; background: rgba(0,0,0,0.5); color: white; outline:none; text-align:center; margin-bottom:10px; width:220px; font-family: 'Montserrat';">
-
-            <div style="margin-top:15px; font-size:14px; opacity: 0.8;">
-                Lượt truy cập: <span id="view-count-overlay" style="color: #bd93f9;">...</span>
+                style="padding:12px 20px; border-radius:25px; border: 2px solid #ff79c6; background: rgba(0,0,0,0.5); color: white; outline:none; text-align:center; width:220px; font-family: 'Montserrat';">
+            
             </div>
-        </div>
     </div>
     
     <video id="bg-video" muted loop playsinline preload="auto">
@@ -279,10 +276,9 @@
         const muteBtn = document.getElementById('muteBtn');
         const usernameInput = document.getElementById("usernameInput");
 
-        // CHỐNG SPAM & ENTER ĐỂ VÀO
         usernameInput.addEventListener("keypress", (e) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
+            if (e.key === "Enter") {
+                e.preventDefault();
                 startEverything();
             }
         });
@@ -293,7 +289,7 @@
             if (name.length > 20) { alert("Tên dài quá rồi nè!"); return; }
 
             localStorage.setItem("username", name);
-            window.logVisitor(name); // Gọi hàm lưu Firebase từ script module
+            window.logVisitor(name); 
 
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.style.display = 'none'; }, 500);
@@ -353,10 +349,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// LƯU TÊN USER VÀO FIREBASE
 window.logVisitor = async function(name) {
     const lastLogged = localStorage.getItem("last_logged_name");
-    if(lastLogged === name) return; // Chống spam trùng tên liên tục
+    if(lastLogged === name) return; 
 
     try {
         await addDoc(collection(db, "visitors"), {
@@ -367,7 +362,6 @@ window.logVisitor = async function(name) {
     } catch (e) { console.error(e); }
 }
 
-// HIỆN MENU LƯU BÚT CUTE
 window.showVisitorMenu = async function() {
     const modal = document.getElementById('qr-modal');
     const title = document.getElementById('qr-title');
@@ -401,36 +395,22 @@ window.showVisitorMenu = async function() {
 }
 
 async function handleViewCounter() {
-  const now = Date.now();
-  const lastView = localStorage.getItem("last_view_time");
-  const ONE_DAY = 24 * 60 * 60 * 1000;
-
   const ref = doc(db, "views", "counter");
   const snap = await getDoc(ref);
-
-  if (lastView && (now - lastView < ONE_DAY)) {
-    if (snap.exists()) {
+  if (snap.exists()) {
       const count = snap.data().count.toLocaleString();
       document.getElementById("view-count").innerText = count;
-      document.getElementById("view-count-overlay").innerText = count;
-    }
-    return;
+      // Vẫn đếm view nhưng không hiện ở overlay nữa
   }
-
-  if (!snap.exists()) {
-    await setDoc(ref, { count: 1 });
-    document.getElementById("view-count").innerText = "1";
-    document.getElementById("view-count-overlay").innerText = "1";
-  } else {
-    const newCount = snap.data().count + 1;
-    await updateDoc(ref, { count: newCount });
-    const count = newCount.toLocaleString();
-    document.getElementById("view-count").innerText = count;
-    document.getElementById("view-count-overlay").innerText = count;
+  
+  const now = Date.now();
+  const lastView = localStorage.getItem("last_view_time");
+  if (!lastView || (now - lastView > 24 * 60 * 60 * 1000)) {
+      if (!snap.exists()) await setDoc(ref, { count: 1 });
+      else await updateDoc(ref, { count: snap.data().count + 1 });
+      localStorage.setItem("last_view_time", now);
   }
-  localStorage.setItem("last_view_time", now);
 }
-
 handleViewCounter();
 </script>
 
